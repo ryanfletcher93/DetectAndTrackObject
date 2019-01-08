@@ -1,0 +1,1 @@
+g++ testImageProcessor.cpp -lopencv_core -lopencv_imgproc -lopencv_highgui -L/usr/local/include/opencv
