@@ -1,0 +1,1 @@
+g++ calibrateCamera.cpp -o calibrateCameras -std=c++11 -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_calib3d -L/usr/local/include/opencv
