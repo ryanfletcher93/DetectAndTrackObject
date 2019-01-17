@@ -5,31 +5,31 @@
 #include <array>
 #include <stdexcept>
 
-using namespace cv;
+//using namespace cv;
 
 #define DEBUG 0
 #define USE_CAMERA 1
 
 #define BOARD_WIDTH 4        // Number of squares the checkerboard is wide
 #define BOARD_HEIGHT 4        // Number of squares the checkerboard is high
-#define BOARD_SIZE Size(BOARD_WIDTH, BOARD_HEIGHT)
+#define BOARD_SIZE cv::Size(BOARD_WIDTH, BOARD_HEIGHT)
 #define BOARD_N (BOARD_WIDTH * BOARD_HEIGHT)
 #define SQUARE_SIZE 24.23    // Number of mills of each checkerboard size
 
 struct SingleCalibrationParams {
-    Mat K, D;
+    cv::Mat K, D;
 } ;
 
 struct StereoCalibrationParams {
     SingleCalibrationParams cam1Intrinsics, cam2Intrinsics;
-    Mat R, E, F;
-    Vec3d T;
+    cv::Mat R, E, F;
+    cv::Vec3d T;
 } ;
 
 SingleCalibrationParams getCameraIntrinsicsFromFile(std::string);
-std::vector<std::array<Mat, 2>> getImagesFromCamera(int, string);
-std::vector<std::array<Mat, 2>> getImagesFromFile(string);
-StereoCalibrationParams stereoCalibrateWrapper(std::vector<std::array<Mat, 2>>, 
+std::vector<std::array<cv::Mat, 2>> getImagesFromCamera(int, std::string);
+std::vector<std::array<cv::Mat, 2>> getImagesFromFile(std::string);
+StereoCalibrationParams stereoCalibrateWrapper(std::vector<std::array<cv::Mat, 2>>, 
         SingleCalibrationParams, 
         SingleCalibrationParams);
 void writeStereoParamsToFile(std::string, StereoCalibrationParams);
@@ -39,7 +39,7 @@ void writeStereoParamsToFile(std::string, StereoCalibrationParams);
  *
  */
 int main(int argc, char * argv[]) {
-    std::vector<std::array<Mat, 2>> imagePairs;
+    std::vector<std::array<cv::Mat, 2>> imagePairs;
     
     SingleCalibrationParams cam1CalibrationParams, cam2CalibrationParams;
     StereoCalibrationParams stereoCalibrationParams;
@@ -84,7 +84,7 @@ int main(int argc, char * argv[]) {
  */
 SingleCalibrationParams getCameraIntrinsicsFromFile(std::string file) {
     SingleCalibrationParams calibrationParams;
-    FileStorage fs(file, FileStorage::READ);
+    cv::FileStorage fs(file, cv::FileStorage::READ);
 
     fs["K"] >> calibrationParams.K;
     fs["D"] >> calibrationParams.D;
@@ -96,12 +96,12 @@ SingleCalibrationParams getCameraIntrinsicsFromFile(std::string file) {
 /*
  *
  */
-std::vector<std::array<Mat, 2>> getImagesFromCamera(int numImages, 
-        string ipAddr1, string ipAddr2) {
+std::vector<std::array<cv::Mat, 2>> getImagesFromCamera(int numImages, 
+        std::string ipAddr1, std::string ipAddr2) {
 
-    std::vector<std::array<Mat, 2>> images;
+    std::vector<std::array<cv::Mat, 2>> images;
     
-    VideoCapture video1, video2;
+    cv::VideoCapture video1, video2;
     
     // Open video camera
     bool isOpenSuccessful1 = video1.open("rtsp://" + ipAddr1 + ":554/onvif1");
@@ -115,7 +115,7 @@ std::vector<std::array<Mat, 2>> getImagesFromCamera(int numImages,
 
     // Wait for user input then get the image at that point
     std::cout << "Position chessboard and press enter to take picture..." << std::endl;
-    std::array<Mat, 2> tempImgArray;
+    std::array<cv::Mat, 2> tempImgArray;
     for (int i=0; i<numImages; i++) {
         getchar();
         video1 >> tempImgArray.at(0);
@@ -130,8 +130,8 @@ std::vector<std::array<Mat, 2>> getImagesFromCamera(int numImages,
 /* TODO: Implement getting images form files
  *
  */
-std::vector<std::array<Mat, 2>> getImagesFromFile(string fileName) {
-    std::vector<std::array<Mat, 2>> imagePairs;
+std::vector<std::array<cv::Mat, 2>> getImagesFromFile(std::string fileName) {
+    std::vector<std::array<cv::Mat, 2>> imagePairs;
 
     return imagePairs;
 }
@@ -140,29 +140,29 @@ std::vector<std::array<Mat, 2>> getImagesFromFile(string fileName) {
 /*
  *
  */
-StereoCalibrationParams stereoCalibrateWrapper(std::vector<std::array<Mat, 2>> imagePairs, 
+StereoCalibrationParams stereoCalibrateWrapper(std::vector<std::array<cv::Mat, 2>> imagePairs, 
         SingleCalibrationParams cam1CalibrationParams, 
         SingleCalibrationParams cam2CalibrationParams) {
     
-    std::vector<std::vector<Point3f>> object_points;
-    std::vector<std::vector<Point2f>> imagePoints1, imagePoints2;
-    std::vector<Point2f> corners1, corners2;
+    std::vector<std::vector<cv::Point3f>> object_points;
+    std::vector<std::vector<cv::Point2f>> imagePoints1, imagePoints2;
+    std::vector<cv::Point2f> corners1, corners2;
 
     bool found1 = false, found2 = false;
-    Mat gray1, gray2;
-    for (const std::array<Mat, 2> &imgArr : imagePairs) {
+    cv::Mat gray1, gray2;
+    for (const std::array<cv::Mat, 2> &imgArr : imagePairs) {
         cvtColor(imgArr.at(0), gray1, CV_BGR2GRAY);
         cvtColor(imgArr.at(1), gray2, CV_BGR2GRAY);
 
-        found1 = findChessboardCorners(imgArr.at(0), BOARD_SIZE, corners1, 
+        found1 = cv::findChessboardCorners(imgArr.at(0), BOARD_SIZE, corners1, 
             CV_CALIB_CB_ADAPTIVE_THRESH | CV_CALIB_CB_FILTER_QUADS);
-        found2 = findChessboardCorners(gray2, BOARD_SIZE, corners2, 
+        found2 = cv::findChessboardCorners(gray2, BOARD_SIZE, corners2, 
             CV_CALIB_CB_ADAPTIVE_THRESH | CV_CALIB_CB_FILTER_QUADS);
 
-        std::vector<Point3f> obj;
+        std::vector<cv::Point3f> obj;
         for (int i=0; i<BOARD_HEIGHT; i++) {
             for (int j=0; j<BOARD_WIDTH; j++) {
-                obj.push_back(Point3f((float) j*SQUARE_SIZE, (float) i*SQUARE_SIZE, 0));
+                obj.push_back(cv::Point3f((float) j*SQUARE_SIZE, (float) i*SQUARE_SIZE, 0));
             }
         }
 
@@ -174,10 +174,10 @@ StereoCalibrationParams stereoCalibrateWrapper(std::vector<std::array<Mat, 2>> i
         }
     }
 
-    Mat R, E, F;
-    Vec3d T;
+    cv::Mat R, E, F;
+    cv::Vec3d T;
 
-    stereoCalibrate(
+    cv::stereoCalibrate(
             object_points, 
             imagePoints1, 
             imagePoints2, 
@@ -208,7 +208,7 @@ StereoCalibrationParams stereoCalibrateWrapper(std::vector<std::array<Mat, 2>> i
  *
  */
 void writeStereoParamsToFile(std::string saveFile, StereoCalibrationParams stereoCalibrationParams) {
-    FileStorage fs(saveFile, FileStorage::WRITE);
+    cv::FileStorage fs(saveFile, cv::FileStorage::WRITE);
 
     fs << "K1" << stereoCalibrationParams.cam1Intrinsics.K;
     fs << "D1" << stereoCalibrationParams.cam1Intrinsics.D;

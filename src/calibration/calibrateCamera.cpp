@@ -21,19 +21,18 @@
 
 #define BOARD_WIDTH 9        // Number of squares the checkerboard is wide
 #define BOARD_HEIGHT 7        // Number of squares the checkerboard is high
-#define BOARD_SIZE Size(BOARD_WIDTH, BOARD_HEIGHT)
+#define BOARD_SIZE cv::Size(BOARD_WIDTH, BOARD_HEIGHT)
 #define BOARD_N (BOARD_WIDTH * BOARD_HEIGHT)
 #define SQUARE_SIZE 24.23    // Number of mills of each checkerboard size
 
-using namespace cv;
 
-std::vector<Mat> getImagesFromCamera(int, std::string);
-std::vector<Mat> getImagesFromFile(std::string);
-void saveImagesToFile(std::vector<Mat>, std::string, std::string);
-bool calibrateCameraUsingImages(std::vector<Mat>, std::string);
+std::vector<cv::Mat> getImagesFromCamera(int, std::string);
+std::vector<cv::Mat> getImagesFromFile(std::string);
+void saveImagesToFile(std::vector<cv::Mat>, std::string, std::string);
+bool calibrateCameraUsingImages(std::vector<cv::Mat>, std::string);
 
 int main(int argc, char * argv[]) {
-    std::vector<Mat> calibImages1, calibImages2;
+    std::vector<cv::Mat> calibImages1, calibImages2;
     if (USE_CAMERA) {
         calibImages1 = getImagesFromCamera(NUM_IMAGES, CAM1_IP_ADDR);
         calibImages2 = getImagesFromCamera(NUM_IMAGES, CAM2_IP_ADDR);
@@ -56,10 +55,10 @@ int main(int argc, char * argv[]) {
 /*
  *
  */
-std::vector<Mat> getImagesFromCamera(int numImages, std::string ipAddr) {
-    std::vector<Mat> images;
+std::vector<cv::Mat> getImagesFromCamera(int numImages, std::string ipAddr) {
+    std::vector<cv::Mat> images;
     
-    VideoCapture video;
+    cv::VideoCapture video;
     
     // Open video camera
     bool isOpenSuccessful = video.open("rtsp://" + ipAddr + ":554/onvif1");
@@ -73,7 +72,7 @@ std::vector<Mat> getImagesFromCamera(int numImages, std::string ipAddr) {
     // Wait for user input then get the image at that point
     std::cout << "Position chessboard and press enter to take picture..." << std::endl;
     int count=1;
-    Mat tempImg;
+    cv::Mat tempImg;
     for (int i=0; i<numImages; i++) {
         std::cout << i;
         getchar();
@@ -88,15 +87,15 @@ std::vector<Mat> getImagesFromCamera(int numImages, std::string ipAddr) {
 /* TODO: Implement getting images form files
  *
  */
-std::vector<Mat> getImagesFromFile(std::string filePattern, 
+std::vector<cv::Mat> getImagesFromFile(std::string filePattern, 
         std::string replaceSymbol, int numFiles) {
 
     std::regex r (replaceSymbol);
-    std::vector<Mat> images;
+    std::vector<cv::Mat> images;
 
     for (int i=0; i<numFiles; i++) {
         std::string fileName = std::regex_replace (filePattern, r, std::to_string(i));
-        Mat tempImage = imread(fileName, CV_LOAD_IMAGE_COLOR);
+        cv::Mat tempImage = cv::imread(fileName, CV_LOAD_IMAGE_COLOR);
 
         images.push_back(tempImage);
         if (!tempImage.data) {
@@ -111,7 +110,7 @@ std::vector<Mat> getImagesFromFile(std::string filePattern,
 /*
  *
  */
-void saveImagesToFile(std::vector<Mat> images, std::string filePattern, 
+void saveImagesToFile(std::vector<cv::Mat> images, std::string filePattern, 
         std::string replaceStr) {
 
     std::regex r(replaceStr);
@@ -119,7 +118,7 @@ void saveImagesToFile(std::vector<Mat> images, std::string filePattern,
     for (int i=0; i<images.size(); i++) {
         fileName = std::regex_replace (filePattern, r, std::to_string(i));
 
-        imwrite(fileName, images[i]);
+        cv::imwrite(fileName, images[i]);
     }
 }
 
@@ -127,27 +126,27 @@ void saveImagesToFile(std::vector<Mat> images, std::string filePattern,
 /*
  *
  */
-bool calibrateCameraUsingImages(std::vector<Mat> images, std::string outFile) {
+bool calibrateCameraUsingImages(std::vector<cv::Mat> images, std::string outFile) {
     
-    std::vector<std::vector<Point3f>> object_points;
-    std::vector<std::vector<Point2f>> imagePoints;
-    std::vector<Point2f> corners;
+    std::vector<std::vector<cv::Point3f>> object_points;
+    std::vector<std::vector<cv::Point2f>> imagePoints;
+    std::vector<cv::Point2f> corners;
 
     /* For each calibration image, if can find checkerboard, 
     add points to calibration set */
     bool found = false;
-    Mat gray;
+    cv::Mat gray;
     int count = 1;
-    for (const Mat &img : images) {
-        cvtColor(img, gray, CV_BGR2GRAY);
+    for (const cv::Mat &img : images) {
+        cv::cvtColor(img, gray, CV_BGR2GRAY);
 
-        found = findChessboardCorners(gray, BOARD_SIZE, corners, 
+        found = cv::findChessboardCorners(gray, BOARD_SIZE, corners, 
             CV_CALIB_CB_ADAPTIVE_THRESH | CV_CALIB_CB_FILTER_QUADS);
         
-        std::vector<Point3f> obj;
+        std::vector<cv::Point3f> obj;
         for (int i=0; i<BOARD_HEIGHT; i++) {
             for (int j=0; j<BOARD_WIDTH; j++) {
-                obj.push_back(Point3f((float) j*SQUARE_SIZE, (float) i*SQUARE_SIZE, 0));
+                obj.push_back(cv::Point3f((float) j*SQUARE_SIZE, (float) i*SQUARE_SIZE, 0));
             }
         }
 
@@ -160,8 +159,8 @@ bool calibrateCameraUsingImages(std::vector<Mat> images, std::string outFile) {
     }
 
     // Get calibration parameters using checkboard points
-    Mat K,D;
-    std::vector<Mat> rvecs, tvecs;
+    cv::Mat K,D;
+    std::vector<cv::Mat> rvecs, tvecs;
     int flag=0;
     flag |= CV_CALIB_FIX_K4;
     flag |= CV_CALIB_FIX_K5;
@@ -171,10 +170,10 @@ bool calibrateCameraUsingImages(std::vector<Mat> images, std::string outFile) {
         return false;
     }
 
-    calibrateCamera(object_points, imagePoints, gray.size(), K, D, rvecs, tvecs, flag);
+    cv::calibrateCamera(object_points, imagePoints, gray.size(), K, D, rvecs, tvecs, flag);
 
     // Store calibration matricies to file
-    FileStorage fs(outFile, FileStorage::WRITE);
+    cv::FileStorage fs(outFile, cv::FileStorage::WRITE);
     fs << "K" << K;
     fs << "D" << D;
     fs << "BOARD_WIDTH" << BOARD_WIDTH;
