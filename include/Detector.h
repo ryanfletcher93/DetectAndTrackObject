@@ -20,11 +20,13 @@ public:
 };
 
 
-class ThresholdDetector : Detector {
+class ThresholdDetector : public Detector {
 private:
 
 
 public:
+	ThresholdDetector();
+
 	ThresholdDetector(StereoCamera* stereoCamera) {
 		this->stereoCamera = stereoCamera;
 	}

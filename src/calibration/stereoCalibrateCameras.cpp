@@ -10,6 +10,10 @@
 #define DEBUG 0
 #define USE_CAMERA 1
 
+#define CAM1_PARAM_FILE "cam1/calibResults"
+#define CAM2_PARAM_FILE "cam2/calibResults"
+#define DEFAULT_SAVE_FILE "stereo/StereoCameraProperties"
+
 #define BOARD_WIDTH 4        // Number of squares the checkerboard is wide
 #define BOARD_HEIGHT 4        // Number of squares the checkerboard is high
 #define BOARD_SIZE cv::Size(BOARD_WIDTH, BOARD_HEIGHT)
@@ -47,18 +51,17 @@ int main(int argc, char * argv[]) {
     std::string param1file, param2file;
     std::string outFile;
 
-    if (DEBUG) {
-        param1file = "";
-        param2file = "";
+    // Set output file
+    if (false) {
+        outFile = argv[1];
     }
     else {
-        param1file = argv[1];
-        param2file = argv[2];
+        outFile = DEFAULT_SAVE_FILE
     }
 
     // Get stereo calibration images
     if (USE_CAMERA) {
-        //imagePairs = getImagesFromCamera(1, "192.168.1.2", "192.168.1.3");
+        imagePairs = getImagesFromCamera(1, "192.168.1.2", "192.168.1.3");
     }
     else {
         //imagePairs = getImagesFromFile();

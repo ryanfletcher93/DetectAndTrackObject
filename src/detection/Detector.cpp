@@ -4,3 +4,6 @@ Detector::Detector() {
 	
 }
 
+ThresholdDetector::ThresholdDetector() {
+
+}

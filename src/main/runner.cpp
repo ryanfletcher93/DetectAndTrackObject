@@ -1,6 +1,6 @@
 #include <opencv2/opencv.hpp>
 
-using namespace cv;
+#include "Detector.h"
 
 class Runner {
 	Runner() {
@@ -9,6 +9,9 @@ class Runner {
 };
 
 int main() {
+	Detector* thresholdDetector = new ThresholdDetector();
+
+	std::cout << thresholdDetector << std::endl;
 
 	return 0;
 }

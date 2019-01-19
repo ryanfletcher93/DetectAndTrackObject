@@ -7,7 +7,6 @@
 #include <stdexcept>
 
 #define USE_CAMERA 1
-#define NUM_IMAGES 2
 
 #define CAM1_IP_ADDR "192.168.1.4"
 #define CAM2_IP_ADDR "192.168.1.8"
@@ -33,9 +32,15 @@ bool calibrateCameraUsingImages(std::vector<cv::Mat>, std::string);
 
 int main(int argc, char * argv[]) {
     std::vector<cv::Mat> calibImages1, calibImages2;
+
+    int numImages = 0;
+
+    std::cout << "Enter the number of images:";
+    std::cin >> numImages;
+
     if (USE_CAMERA) {
-        calibImages1 = getImagesFromCamera(NUM_IMAGES, CAM1_IP_ADDR);
-        calibImages2 = getImagesFromCamera(NUM_IMAGES, CAM2_IP_ADDR);
+        calibImages1 = getImagesFromCamera(numImages, CAM1_IP_ADDR);
+        calibImages2 = getImagesFromCamera(numImages, CAM2_IP_ADDR);
 
         saveImagesToFile(calibImages1, FILE1_TEMPLATE, REPLACE_STR);
         saveImagesToFile(calibImages2, FILE2_TEMPLATE, REPLACE_STR);

@@ -9,16 +9,18 @@
 
 class StereoCamera {
 private:
-	std::string cam1IpAddr, cam2IpAddr;
-	IpCamera *cam1, *cam2;
+	Camera *cam1, *cam2;
 
 public:
-	StereoCamera(std::string cam1IpAddr, std::string cam2IpAddr) {
-		this->cam1IpAddr = cam1IpAddr;
-		this->cam2IpAddr = cam2IpAddr;
+	StereoCamera(Camera* cam1, Camera* cam2) {
+		this->cam1 = cam1;
+		this->cam2 = cam2;
 	}
 
 	std::array<cv::Mat, 2> getImages();
+
+	void rectifyImages(std::array<cv::Mat, 2> inImagePair, std::array<cv::Mat, 2> rectifiedImages);
+
 };
 
 
