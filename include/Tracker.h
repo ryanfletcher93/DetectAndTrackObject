@@ -13,20 +13,20 @@ private:
 public:
 	Tracker();
 
-	virtual void updateObjects(Detector* detector) = 0 ;
+	virtual void updateTracking(DetectorResults* detectorResults) = 0 ;
 
 };
 
 
 
-class KalmanTracker {
+class KalmanTracker : public Tracker {
 private:
 
 
 public:
 	KalmanTracker();
 
-	void updateObjects(Detector* detector);
+	void updateTracking(DetectorResults* detectorResults);
 };
 
 

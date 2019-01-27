@@ -2,14 +2,7 @@
 
 #include <opencv2/opencv.hpp>
 
-/*
- *
- */
-ThresholdDetector::ThresholdDetector() {
-
-}
-
-DetectorResults* ThresholdDetector::detect() {
+DetectorResults* BackgroundSubtractionDetector::detect() {
 	DetectorResults* detectorResults = new DetectorResults();
 
 	std::vector<cv::Mat> images = stereoCamera->getImages();
@@ -29,7 +22,7 @@ DetectorResults* ThresholdDetector::detect() {
 /*
  *
  */
-cv::Mat ThresholdDetector::thresholdImage(cv::Mat image) {
+cv::Mat BackgroundSubtractionDetector::thresholdImage(cv::Mat image) {
 	cv::Mat imageHsv, thresholdedImage;
 	cv::Mat backgroundImageHsv;
 

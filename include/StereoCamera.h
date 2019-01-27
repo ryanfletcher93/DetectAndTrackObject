@@ -8,18 +8,32 @@
 #include "Camera.h"
 
 class StereoCamera {
+private:
+
 protected:
 	Camera *cam1, *cam2;
+	std::vector<cv::Mat> images;
+
+	std::vector<cv::Mat> rectifiedImages;
 
 public:
+	StereoCamera() {
+		
+	}
+
+
 	StereoCamera(Camera* cam1, Camera* cam2) {
 		this->cam1 = cam1;
 		this->cam2 = cam2;
 	}
 
-	std::array<cv::Mat, 2> getImages();
+	std::vector<cv::Mat> getImages() {
+		return images;
+	}
 
-	void rectifyImages(std::array<cv::Mat, 2> inImagePair, std::array<cv::Mat, 2> rectifiedImages);
+	void getImageFromCameras();
+
+	std::vector<cv::Mat> rectifyImages();
 
 };
 

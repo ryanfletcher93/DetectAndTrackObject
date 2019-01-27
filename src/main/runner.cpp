@@ -2,62 +2,53 @@
 
 #include "Camera.h"
 #include "Detector.h"
+#include "StereoCamera.h"
+#include "Tracker.h"
 
-class Runner {
-	Runner() {
-
-	}
-};
-
-int main() {
-	Camera* cam1 = new IpCamera(); 	
-	Camera* cam2 = new IpCamera();
-
-	cv::Mat backgroundImg1, backgroundImg2;
-
-	StereoCamera * stereoCamera1 = new StereoCameraWithBackground(cam1, cam2, backgroundImg1, backgroundImg2);
-
-
-	Detector* thresholdDetector = new ThresholdDetector();
-
-
-	return 0;
-}
-
-
-
-
-/*
 class Runner {
 private:
-Mat img1, img2;
-StereoCamera* stereoCamera;
-Detector* detector;
-Tracker* tracker;
-Trigger* trigger;
+	StereoCamera * stereoCamera;
+	Detector * detector;
+	Tracker * tracker;
+
 
 public:
 	Runner() {
+		Camera* cam1 = new IpCamera(""); 	
+		Camera* cam2 = new IpCamera("");
+
+		cv::Mat backgroundImg1, backgroundImg2;
+
+		stereoCamera = new StereoCameraWithBackground(cam1, cam2, backgroundImg1, backgroundImg2);
+
+		detector = new BackgroundSubtractionDetector(stereoCamera);
+
+		tracker = new KalmanTracker();
 	}
 
+	void startTracking() {
+		int numRemainingImages = 1;
+		while (numRemainingImages >= 0) {
+			stereoCamera->getImages();
+			DetectorResults* detectorResults = detector->detect();
 
+			tracker->updateTracking(detectorResults);
 
-	void runTracking() {
-		detector = new ThresholdDetector();
-		tracker = new KalmanTracker();
-		trigger = new Trigger();
+			delete detectorResults;
 
-		while(true) {
-			std::array<Mat, 2> = stereoCamera->getImages();
-
-			detector.detect(stereoCamera);
-
-			tracker.track(detector);
-
-			if (false) {
-				trigger.fire();
-			}
+			numRemainingImages--;
 		}
 	}
+};
+
+
+
+int main() {
+
+	Runner runner;
+	runner.startTracking();
+
+	std::cout << &runner << std::endl;
+
+	return 0;
 }
-*/

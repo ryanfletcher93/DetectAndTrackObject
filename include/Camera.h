@@ -40,7 +40,6 @@ protected:
 	cv::Mat getImage();
 
 public:
-	IpCamera();
 	IpCamera(std::string);
 
 	std::string getIpAddr() {

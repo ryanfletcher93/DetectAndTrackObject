@@ -2,10 +2,6 @@
 
 #include <opencv2/opencv.hpp>
 
-IpCamera::IpCamera() {
-
-}
-
 IpCamera::IpCamera(std::string ipAddr) {
 	this->ipAddr = ipAddr;
 }
