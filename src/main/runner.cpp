@@ -1,5 +1,6 @@
 #include <opencv2/opencv.hpp>
 
+#include "Camera.h"
 #include "Detector.h"
 
 class Runner {
@@ -9,9 +10,16 @@ class Runner {
 };
 
 int main() {
+	Camera* cam1 = new IpCamera(); 	
+	Camera* cam2 = new IpCamera();
+
+	cv::Mat backgroundImg1, backgroundImg2;
+
+	StereoCamera * stereoCamera1 = new StereoCameraWithBackground(cam1, cam2, backgroundImg1, backgroundImg2);
+
+
 	Detector* thresholdDetector = new ThresholdDetector();
 
-	std::cout << thresholdDetector << std::endl;
 
 	return 0;
 }

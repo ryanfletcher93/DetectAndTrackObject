@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 11)
 
 include_directories(include)
 
-file(GLOB SOURCES "src/main/*.cpp" "src/camera/*.cpp" "src/detection/*.cpp" "src/stereoCamera/*.cpp" "src/tracking/*.cpp")
+file(GLOB SOURCES "src/main/*.cpp" "src/camera/*.cpp" "src/detection/*.cpp" "src/stereoCamera/*.cpp" "src/tracking/*.cpp" "src/actionEndEffector/*.cpp" "src/motor/*.cpp")
 
 add_executable(objectTracker ${SOURCES})
 

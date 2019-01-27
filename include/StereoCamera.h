@@ -8,7 +8,7 @@
 #include "Camera.h"
 
 class StereoCamera {
-private:
+protected:
 	Camera *cam1, *cam2;
 
 public:
@@ -20,6 +20,25 @@ public:
 	std::array<cv::Mat, 2> getImages();
 
 	void rectifyImages(std::array<cv::Mat, 2> inImagePair, std::array<cv::Mat, 2> rectifiedImages);
+
+};
+
+
+
+/*
+ *
+ */
+class StereoCameraWithBackground : public StereoCamera {
+private:
+	cv::Mat backgroundImg1, backgroundImg2;
+
+public:
+	StereoCameraWithBackground(
+			Camera* cam1,
+			Camera* cam2, 
+			cv::Mat backgroundImg1, 
+			cv::Mat backgroundImg2);
+
 
 };
 

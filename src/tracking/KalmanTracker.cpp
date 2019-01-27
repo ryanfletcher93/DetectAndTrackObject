@@ -5,6 +5,6 @@ KalmanTracker::KalmanTracker() {
 }
 
 
-KalmanTracker::updateObjects(Detector detector) {
+void KalmanTracker::updateObjects(Detector* detector) {
 	
 }

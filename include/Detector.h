@@ -10,12 +10,6 @@ protected:
 	StereoCamera* stereoCamera;
 
 public:
-	Detector();
-
-	Detector(StereoCamera* stereoCamera) {
-		this->stereoCamera = stereoCamera;
-	}
-
 	virtual void detect() = 0;
 };
 
@@ -23,11 +17,10 @@ public:
 class ThresholdDetector : public Detector {
 private:
 
-
 public:
 	ThresholdDetector();
 
-	ThresholdDetector(StereoCamera* stereoCamera) {
+	ThresholdDetector(StereoCameraWithBackground* stereoCameras) {
 		this->stereoCamera = stereoCamera;
 	}
 
