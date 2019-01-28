@@ -14,12 +14,12 @@ private:
 
 public:
 	Runner() {
-		Camera* cam1 = new IpCamera(""); 	
-		Camera* cam2 = new IpCamera("");
+		Camera* cam1 = new VideoFromFile("", "../src/calibration/cameraSetup1/cam1/calibResults"); 	
+		Camera* cam2 = new VideoFromFile("", "../src/calibration/cameraSetup1/cam2/calibResults");
 
 		cv::Mat backgroundImg1, backgroundImg2;
 
-		stereoCamera = new StereoCameraWithBackground(cam1, cam2, backgroundImg1, backgroundImg2);
+		stereoCamera = new StereoCameraWithBackground(cam1, cam2, "../src/calibration/cameraSetup1/stereo/calibResults");
 
 		detector = new BackgroundSubtractionDetector(stereoCamera);
 
@@ -29,7 +29,7 @@ public:
 	void startTracking() {
 		int numRemainingImages = 1;
 		while (numRemainingImages >= 0) {
-			stereoCamera->getImages();
+			stereoCamera->getImageFromCameras();
 			DetectorResults* detectorResults = detector->detect();
 
 			tracker->updateTracking(detectorResults);

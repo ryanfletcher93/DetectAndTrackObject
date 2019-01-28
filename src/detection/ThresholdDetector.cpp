@@ -12,8 +12,8 @@ ThresholdDetector::ThresholdDetector() {
 DetectorResults* ThresholdDetector::detect() {
 	DetectorResults* detectorResults = new DetectorResults();
 
-	std::vector<cv::Mat> images = stereoCamera->getImages();
-	std::vector<cv::Mat> thresholdedImages;
+	std::array<cv::Mat, 2> images = stereoCamera->getImages();
+	std::array<cv::Mat, 2> thresholdedImages;
 	for (cv::Mat image : images) {
 		// Threshold images using user supplied config
 		thresholdImage(image);

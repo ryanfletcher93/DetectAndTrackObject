@@ -97,3 +97,18 @@ std::vector<cv::Mat> Camera::getImagesUsingDelay(int numImages, int delay) {
 
 	return images;
 }
+
+
+/*
+ *
+ */
+void Camera::getCameraIntrinsicsFromFile(std::string filePath) {
+	cv::FileStorage fs;
+	fs.open(filePath , cv::FileStorage::READ);
+
+	fs["K"] >> this->K;
+	fs["D"] >> this->D;
+	fs["BOARD_WIDTH"] >> this->boardWidth;
+	fs["BOARD_HEIGHT"] >> this->boardHeight;
+	fs["SQUARE_SIZE"] >> this->squareSize;
+}

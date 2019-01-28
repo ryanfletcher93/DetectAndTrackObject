@@ -2,8 +2,10 @@
 
 #include <opencv2/opencv.hpp>
 
-IpCamera::IpCamera(std::string ipAddr) {
+IpCamera::IpCamera(std::string ipAddr, std::string intrinsicsFilePath) {
 	this->ipAddr = ipAddr;
+
+	getCameraIntrinsicsFromFile(intrinsicsFilePath);
 }
 
 /*
@@ -20,7 +22,8 @@ bool IpCamera::openCamera() {
  *
  */
 bool IpCamera::closeCamera() {
-
+	video.release();
+	
 	return true;
 }
 

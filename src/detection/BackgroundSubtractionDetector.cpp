@@ -2,17 +2,18 @@
 
 #include <opencv2/opencv.hpp>
 
+
 DetectorResults* BackgroundSubtractionDetector::detect() {
 	DetectorResults* detectorResults = new DetectorResults();
 
-	std::vector<cv::Mat> images = stereoCamera->getImages();
-	std::vector<cv::Mat> thresholdedImages;
+	std::array<cv::Mat, 2> images = stereoCamera->getImages();
+	std::array<cv::Mat, 2> thresholdedImages;
 	for (cv::Mat image : images) {
 		// Threshold images using user supplied config
-		thresholdImage(image);
+		cv::Mat thresholdedImage = subtractBackground(image);
 
 		// Detect objects in thresholded image
-		identifyObjects(image);
+		identifyObjects(thresholdedImage);
 	}
 
 	return detectorResults;
@@ -22,11 +23,13 @@ DetectorResults* BackgroundSubtractionDetector::detect() {
 /*
  *
  */
-cv::Mat BackgroundSubtractionDetector::thresholdImage(cv::Mat image) {
+cv::Mat BackgroundSubtractionDetector::subtractBackground(cv::Mat image) {
 	cv::Mat imageHsv, thresholdedImage;
 	cv::Mat backgroundImageHsv;
 
 	cv::cvtColor(image, imageHsv, cv::COLOR_BGR2HSV);
+
+	cv::absdiff(imageHsv, backgroundImageHsv, thresholdedImage);
 
 	return thresholdedImage;
 }

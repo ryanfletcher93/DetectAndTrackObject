@@ -19,11 +19,10 @@ class Detector {
 protected:
 	StereoCamera* stereoCamera;
 
-
 	/*
 	 *
 	 */
-	virtual void identifyObjects(cv::Mat image);
+	virtual std::vector<cv::KeyPoint> identifyObjects(cv::Mat image);
 
 public:
 	virtual DetectorResults* detect() = 0;
@@ -39,12 +38,6 @@ private:
 	 *
 	 */
 	cv::Mat thresholdImage(cv::Mat image);
-
-	/*
-	 *
-	 */
-	//void identifyObjects(cv::Mat thresholdedImage);
-
 
 public:
 	ThresholdDetector();
@@ -68,9 +61,6 @@ class BackgroundSubtractionDetector : public Detector {
 private:
 	cv::Mat thresholdImage(cv::Mat image);
 
-	//void identifyObjects(cv::Mat thresholdedImage);
-
-
 public:
 	/*
 	 *
@@ -83,6 +73,8 @@ public:
 	BackgroundSubtractionDetector(StereoCamera* stereoCamera) {
 		this->stereoCamera = stereoCamera;
 	}
+
+	cv::Mat subtractBackground(cv::Mat image);
 
 	DetectorResults* detect();
 };
