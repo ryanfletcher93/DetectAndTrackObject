@@ -8,8 +8,8 @@
 
 #define USE_CAMERA 1
 
-#define CAM1_IP_ADDR "192.168.1.4"
-#define CAM2_IP_ADDR "192.168.1.8"
+#define CAM1_IP_ADDR "192.168.1.7"
+#define CAM2_IP_ADDR "192.168.1.9"
 
 #define FILE1_TEMPLATE "cam1/image*.png"
 #define FILE2_TEMPLATE "cam2/image*.png"
@@ -22,7 +22,7 @@
 #define BOARD_HEIGHT 7        // Number of squares the checkerboard is high
 #define BOARD_SIZE cv::Size(BOARD_WIDTH, BOARD_HEIGHT)
 #define BOARD_N (BOARD_WIDTH * BOARD_HEIGHT)
-#define SQUARE_SIZE 24.23    // Number of mills of each checkerboard size
+#define SQUARE_SIZE 20    // Number of mills of each checkerboard size
 
 
 std::vector<cv::Mat> getImagesFromCamera(int, std::string);
@@ -39,10 +39,10 @@ int main(int argc, char * argv[]) {
     std::cin >> numImages;
 
     if (USE_CAMERA) {
-        calibImages1 = getImagesFromCamera(numImages, CAM1_IP_ADDR);
+        //calibImages1 = getImagesFromCamera(numImages, CAM1_IP_ADDR);
         calibImages2 = getImagesFromCamera(numImages, CAM2_IP_ADDR);
 
-        saveImagesToFile(calibImages1, FILE1_TEMPLATE, REPLACE_STR);
+        //saveImagesToFile(calibImages1, FILE1_TEMPLATE, REPLACE_STR);
         saveImagesToFile(calibImages2, FILE2_TEMPLATE, REPLACE_STR);
     }
     else {
@@ -50,7 +50,7 @@ int main(int argc, char * argv[]) {
         //calibImgaes2 = getImagesFromFile(FILE2_TEMPLATE, REPLACE_STR, NUM_IMAGES);
     }
 
-    calibrateCameraUsingImages(calibImages1, OUT_FILE1);
+    //calibrateCameraUsingImages(calibImages1, OUT_FILE1);
     calibrateCameraUsingImages(calibImages2, OUT_FILE2);
 
     return 0;
@@ -79,8 +79,9 @@ std::vector<cv::Mat> getImagesFromCamera(int numImages, std::string ipAddr) {
     int count=1;
     cv::Mat tempImg;
     for (int i=0; i<numImages; i++) {
-        std::cout << i;
-        getchar();
+        //std::cout << i;
+        std::cin >> count;
+        std::cin.clear();
         video >> tempImg;
         images.push_back(tempImg);
     }

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <regex>
 #include <array>
 #include <stdexcept>
 
@@ -14,11 +15,18 @@
 #define CAM2_PARAM_FILE "cam2/calibResults"
 #define DEFAULT_SAVE_FILE "stereo/StereoCameraProperties"
 
-#define BOARD_WIDTH 4        // Number of squares the checkerboard is wide
-#define BOARD_HEIGHT 4        // Number of squares the checkerboard is high
+#define CAM1_IPADDR "192.168.1.7"
+#define CAM2_IPADDR "192.168.1.9"
+
+#define FILE1_TEMPLATE "cam1/background1WithObjects.png"
+#define FILE2_TEMPLATE "cam2/background1WithObjects.png"
+#define REPLACE_STR "\\*"
+
+#define BOARD_WIDTH 9        // Number of squares the checkerboard is wide
+#define BOARD_HEIGHT 7        // Number of squares the checkerboard is high
 #define BOARD_SIZE cv::Size(BOARD_WIDTH, BOARD_HEIGHT)
 #define BOARD_N (BOARD_WIDTH * BOARD_HEIGHT)
-#define SQUARE_SIZE 24.23    // Number of mills of each checkerboard size
+#define SQUARE_SIZE 20    // Number of mills of each checkerboard size
 
 struct SingleCalibrationParams {
     cv::Mat K, D;
@@ -31,19 +39,19 @@ struct StereoCalibrationParams {
 } ;
 
 SingleCalibrationParams getCameraIntrinsicsFromFile(std::string);
-std::vector<std::array<cv::Mat, 2>> getImagesFromCamera(int, std::string);
+std::array<cv::Mat, 2> getImageFromCamera(int, std::string, std::string);
 std::vector<std::array<cv::Mat, 2>> getImagesFromFile(std::string);
 StereoCalibrationParams stereoCalibrateWrapper(std::vector<std::array<cv::Mat, 2>>, 
         SingleCalibrationParams, 
         SingleCalibrationParams);
 void writeStereoParamsToFile(std::string, StereoCalibrationParams);
-
+void saveImagesToFile(std::vector<cv::Mat>, std::string, std::string);
 
 /*
  *
  */
 int main(int argc, char * argv[]) {
-    std::vector<std::array<cv::Mat, 2>> imagePairs;
+    std::array<cv::Mat, 2> imagePairs;
     
     SingleCalibrationParams cam1CalibrationParams, cam2CalibrationParams;
     StereoCalibrationParams stereoCalibrationParams;
@@ -56,27 +64,30 @@ int main(int argc, char * argv[]) {
         outFile = argv[1];
     }
     else {
-        outFile = DEFAULT_SAVE_FILE
+        outFile = DEFAULT_SAVE_FILE;
     }
 
     // Get stereo calibration images
     if (USE_CAMERA) {
-        imagePairs = getImagesFromCamera(1, "192.168.1.2", "192.168.1.3");
+        imagePairs = getImageFromCamera(5, CAM1_IPADDR, CAM2_IPADDR);
     }
     else {
         //imagePairs = getImagesFromFile();
     }
 
+    imwrite(FILE1_TEMPLATE, imagePairs[0]);
+    imwrite(FILE2_TEMPLATE, imagePairs[1]);
+
     // Retrieve existing intrinsic camera properties from file using arguments
-    cam1CalibrationParams = getCameraIntrinsicsFromFile(param1file);
-    cam2CalibrationParams = getCameraIntrinsicsFromFile(param2file);
+    //cam1CalibrationParams = getCameraIntrinsicsFromFile(CAM1_PARAM_FILE);
+    //cam2CalibrationParams = getCameraIntrinsicsFromFile(CAM2_PARAM_FILE);
 
     // Calibrate the cameras
-    stereoCalibrationParams = stereoCalibrateWrapper(imagePairs, 
-            cam1CalibrationParams, cam2CalibrationParams);
+    //stereoCalibrationParams = stereoCalibrateWrapper(imagePairs, 
+    //        cam1CalibrationParams, cam2CalibrationParams);
 
     // Store the stereo camera properties in file
-    writeStereoParamsToFile(outFile, stereoCalibrationParams);
+    //writeStereoParamsToFile(outFile, stereoCalibrationParams);
 
     return 0;
 }
@@ -99,34 +110,46 @@ SingleCalibrationParams getCameraIntrinsicsFromFile(std::string file) {
 /*
  *
  */
-std::vector<std::array<cv::Mat, 2>> getImagesFromCamera(int numImages, 
+std::array<cv::Mat, 2> getImageFromCamera(int numImages, 
         std::string ipAddr1, std::string ipAddr2) {
 
-    std::vector<std::array<cv::Mat, 2>> images;
+    std::array<cv::Mat, 2> images;
     
-    cv::VideoCapture video1, video2;
-    
-    // Open video camera
-    bool isOpenSuccessful1 = video1.open("rtsp://" + ipAddr1 + ":554/onvif1");
-    bool isOpenSuccessful2 = video2.open("rtsp://" + ipAddr2 + ":554/onvif1");
+    cv::VideoCapture video1("rtsp://" + ipAddr1 + ":554/onvif1");
+    cv::VideoCapture video2("rtsp://" + ipAddr2 + ":554/onvif1");
 
     // Check for connection error
-    if (!isOpenSuccessful1 || !isOpenSuccessful2) {
+    if (!video1.isOpened() || !video2.isOpened()) {
         // TODO: Specify which camera is not connecting
         throw std::runtime_error("Unable to conect to a camera");
     }
 
     // Wait for user input then get the image at that point
-    std::cout << "Position chessboard and press enter to take picture..." << std::endl;
-    std::array<cv::Mat, 2> tempImgArray;
-    for (int i=0; i<numImages; i++) {
-        getchar();
-        video1 >> tempImgArray.at(0);
-        video2 >> tempImgArray.at(1);
-        images.push_back(tempImgArray);
-    }
+    std::array<cv::Mat, 2> tempImgArray;   
+
+    cv::Mat tempImg1, tempImg2;
+    
+    video1 >> tempImg1;
+    video2 >> tempImg2;
+    images[0] = tempImg1;
+    images[1] = tempImg2;
 
     return images;
+}
+
+/*
+ *
+ */
+void saveImagesToFile(std::vector<cv::Mat> images, std::string filePattern, 
+        std::string replaceStr) {
+
+    std::regex r(replaceStr);
+    std::string fileName;
+    for (int i=0; i<images.size(); i++) {
+        fileName = std::regex_replace (filePattern, r, std::to_string(i));
+
+        cv::imwrite(fileName, images[i]);
+    }
 }
 
 
