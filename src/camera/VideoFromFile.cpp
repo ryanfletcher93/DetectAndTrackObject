@@ -3,7 +3,7 @@
 #include <opencv2/opencv.hpp>
 
 VideoFromFile::VideoFromFile(std::string videoFilePath, std::string intrinsicsFilePath) {
-	this->fileName = fileName;
+	this->fileName = videoFilePath;
 
 	getCameraIntrinsicsFromFile(intrinsicsFilePath);
 }
@@ -33,7 +33,7 @@ bool VideoFromFile::closeCamera() {
  */
 cv::Mat VideoFromFile::getImage() {
     cv::Mat tempImg;
-    tempImg = video.grab();
+    video >> tempImg;
 
     return tempImg;
 }
