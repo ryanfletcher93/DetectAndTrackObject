@@ -14,7 +14,10 @@
 #define CAM1_VIDEO_PATH "../src/calibration/cameraSetup1/cam1/video0.avi"
 #define CAM2_VIDEO_PATH "../src/calibration/cameraSetup1/cam2/video0.avi"
 
-#define USE_CAMERA false
+#define IMAGE1_PATH "../src/calibration/cameraSetup1/cam1/image0.png"
+#define IMAGE2_PATH "../src/calibration/cameraSetup1/cam2/image0.png"
+
+enum class InputType {Camera,Video,Image};
 
 class Runner {
 private:
@@ -25,16 +28,22 @@ private:
 
 public:
 	Runner() {
+		InputType inputType = InputType::Image;
+
 		Camera* cam1;
 		Camera* cam2;
 
-		if (USE_CAMERA) {
+		if (inputType == InputType::Camera) {
 			cam1 = new IpCamera(CAM1_IPADDR, CAM1_INTRINSICS_PATH);
 			cam2 = new IpCamera(CAM2_IPADDR, CAM2_INTRINSICS_PATH);
 		}
-		else {
+		else if (inputType == InputType::Video) {
 			cam1 = new VideoFromFile(CAM1_VIDEO_PATH, CAM1_INTRINSICS_PATH);
 			cam2 = new VideoFromFile(CAM2_VIDEO_PATH, CAM2_INTRINSICS_PATH);
+		}
+		else if (inputType == InputType::Image) {
+			cam1 = new SingleImage(IMAGE1_PATH, CAM1_INTRINSICS_PATH);
+			cam2 = new SingleImage(IMAGE2_PATH, CAM2_INTRINSICS_PATH);
 		}
 
 		cv::Mat backgroundImg1, backgroundImg2;

@@ -46,7 +46,6 @@ public:
 	/* Use stereo camera intrinsics to rectify images
 	 */
 	std::array<cv::Mat, 2> rectifyImages();
-
 };
 
 

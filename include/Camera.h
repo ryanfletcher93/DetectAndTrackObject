@@ -3,6 +3,12 @@
 
 #include <opencv2/opencv.hpp>
 
+using std::string;
+using std::vector;
+
+using cv::Mat;
+using cv::VideoCapture;
+
 /**
  *
  */
@@ -10,25 +16,25 @@ class Camera {
 private:
 
 protected:
-	cv::VideoCapture video;
-	std::string cameraIntrinsicsFileName;
+	VideoCapture video;
+	string cameraIntrinsicsFileName;
 
-	cv::Mat K, D;
+	Mat K, D;
 	int boardWidth, boardHeight;
 	float squareSize;
 
 	virtual bool openCamera() = 0;
 	virtual bool closeCamera() = 0;
-	virtual cv::Mat getImage() = 0;
+	virtual Mat getImage() = 0;
 
 public:
-	virtual cv::Mat getSingleImage();
-	virtual cv::Mat getImageOnButtonPress();
-	virtual std::vector<cv::Mat> getImagesOnButtonPress(int numImages);
-	virtual std::vector<cv::Mat> getImagesUsingDelay(int numImages, int delay);
-	virtual std::vector<cv::Mat> getImagesUntilCharacter(char stopChar);
+	virtual Mat getSingleImage();
+	virtual Mat getImageOnButtonPress();
+	virtual vector<Mat> getImagesOnButtonPress(int numImages);
+	virtual vector<Mat> getImagesUsingDelay(int numImages, int delay);
+	virtual vector<Mat> getImagesUntilCharacter(char stopChar);
 
-	virtual void getCameraIntrinsicsFromFile(std::string filePath);
+	virtual void getCameraIntrinsicsFromFile(string filePath);
 };
 
 /**
@@ -36,20 +42,20 @@ public:
  */
 class IpCamera : public Camera {
 private:
-	std::string ipAddr;
+	string ipAddr;
 
 protected:
 	bool openCamera();
 	bool closeCamera();
-	cv::Mat getImage();
+	Mat getImage();
 
 public:
-	IpCamera(std::string ipAddr, std::string intrinsicsFilePath);
+	IpCamera(string ipAddr, string intrinsicsFilePath);
 
-	std::string getIpAddr() {
+	string getIpAddr() {
 		return this->ipAddr;
 	}
-	void setIpAddr(std::string ipAddr) {
+	void setIpAddr(string ipAddr) {
 		this->ipAddr = ipAddr;
 	}
 };
@@ -59,22 +65,41 @@ public:
  */
 class VideoFromFile : public Camera {
 private:
-	std::string fileName;
+	string fileName;
 
 protected:
 	bool openCamera();
 	bool closeCamera();
-	cv::Mat getImage();
+	Mat getImage();
 
 public:
-	VideoFromFile(std::string videoFilePath, std::string intrinsicsFilePath);
+	VideoFromFile(string videoFilePath, string intrinsicsFilePath);
 
-	std::string getFileName() {
+	string getFileName() {
 		return this->fileName;
 	}
-	void setFileName(std::string fileName) {
+	void setFileName(string fileName) {
 		this->fileName = fileName;
 	}
+};
+
+
+/**
+ *
+ */
+class SingleImage : public Camera {
+private:
+	string filePath;
+
+protected:
+	bool openCamera();
+	bool closeCamera();
+	Mat getImage();
+
+public:
+	/*
+	 */
+	SingleImage(string imageFilePath, string intrinsicsFilePath);
 };
 
 #endif // CAMERA_H
