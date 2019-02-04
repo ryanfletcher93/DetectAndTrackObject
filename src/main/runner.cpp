@@ -14,8 +14,15 @@
 #define CAM1_VIDEO_PATH "../src/calibration/cameraSetup1/cam1/video0.avi"
 #define CAM2_VIDEO_PATH "../src/calibration/cameraSetup1/cam2/video0.avi"
 
-#define IMAGE1_PATH "../src/calibration/cameraSetup1/cam1/image0.png"
-#define IMAGE2_PATH "../src/calibration/cameraSetup1/cam2/image0.png"
+#define IMAGE1_PATH "../src/calibration/cameraSetup1/cam1/background1WithObjects.png"
+#define IMAGE2_PATH "../src/calibration/cameraSetup1/cam2/background1WithObjects.png"
+
+#define STEREO_INTRINSICS_PATH "../src/calibration/cameraSetup1/stereo/StereoCameraProperties"
+
+#define BACKGROUND_IMG_1 "../src/calibration/cameraSetup1/cam1/background1.png"
+#define BACKGROUND_IMG_2 "../src/calibration/cameraSetup1/cam2/background1.png"
+
+using cv::Mat;
 
 enum class InputType {Camera,Video,Image};
 
@@ -46,11 +53,14 @@ public:
 			cam2 = new SingleImage(IMAGE2_PATH, CAM2_INTRINSICS_PATH);
 		}
 
-		cv::Mat backgroundImg1, backgroundImg2;
-
 		stereoCamera = new StereoCameraWithBackground(cam1, cam2, "../src/calibration/cameraSetup1/stereo/calibResults");
+		stereoCamera->setStereoIntrinsicsFromFile(STEREO_INTRINSICS_PATH);
 
+		//
+		Mat backgroundImg1 = cv::imread(BACKGROUND_IMG_1);
+		Mat backgroundImg2 = cv::imread(BACKGROUND_IMG_2);
 		detector = new BackgroundSubtractionDetector(stereoCamera);
+		detector->setBackgroundImages(backgroundImg1, backgroundImg2);
 
 		tracker = new KalmanTracker();
 	}
@@ -59,7 +69,7 @@ public:
 		int numRemainingImages = 1;
 		while (numRemainingImages >= 0) {
 			stereoCamera->getImageFromCameras();
-			//DetectorResults* detectorResults = detector->detect();
+			DetectorResults* detectorResults = detector->detect();
 
 			//tracker->updateTracking(detectorResults);
 

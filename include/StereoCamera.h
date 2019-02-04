@@ -24,9 +24,6 @@ protected:
 	cv::Mat R, E, F;
 	cv::Vec3d T;
 
-	// Functions
-	void setStereoIntrinsicsFromFile(std::string);
-
 public:
 	StereoCamera() {}
 
@@ -46,6 +43,10 @@ public:
 	/* Use stereo camera intrinsics to rectify images
 	 */
 	std::array<cv::Mat, 2> rectifyImages();
+
+	/*
+	 */
+	void setStereoIntrinsicsFromFile(std::string);
 };
 
 
@@ -59,6 +60,11 @@ private:
 
 public:
 	using StereoCamera::StereoCamera;
+
+	void setBackgroundImages(Mat img1, Mat img2) {
+		this->backgroundImg1 = img1;
+		this->backgroundImg2 = img2;
+	}
 
 };
 

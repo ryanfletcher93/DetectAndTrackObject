@@ -5,6 +5,9 @@
 
 #include "StereoCamera.h"
 
+using std::string;
+
+using cv::Mat;
 
 class DetectorResults {
 private:
@@ -12,6 +15,19 @@ private:
 
 public:
 		
+};
+
+
+class BackgroundSubtraction {
+private:
+    Mat backgroundImg1;
+    Mat backgroundImg2;
+
+public:
+    virtual void setBackgroundImages(Mat img1, Mat img2) {
+        this->backgroundImg1 = img1;
+        this->backgroundImg2 = img2;
+    }
 };
 
 
@@ -25,6 +41,7 @@ protected:
 	virtual std::vector<cv::KeyPoint> identifyObjects(cv::Mat image);
 
 public:
+	virtual void setBackgroundImages(Mat img1, Mat img2) {};
 	virtual DetectorResults* detect() = 0;
 };
 
@@ -37,7 +54,7 @@ private:
 	/*
 	 *
 	 */
-	cv::Mat thresholdImage(cv::Mat image);
+	Mat thresholdImage(Mat image);
 
 public:
 	ThresholdDetector();
@@ -57,24 +74,27 @@ public:
 /*
  *
  */
-class BackgroundSubtractionDetector : public Detector {
+class BackgroundSubtractionDetector : public Detector, public BackgroundSubtraction {
 private:
-	cv::Mat thresholdImage(cv::Mat image);
+	Mat backgroundImage1;
+	Mat backgroundImage2;
+
+	Mat thresholdImage(Mat image);
 
 public:
 	/*
 	 *
 	 */
-	BackgroundSubtractionDetector() {
-
-	}
+	BackgroundSubtractionDetector() {}
 
 
 	BackgroundSubtractionDetector(StereoCamera* stereoCamera) {
 		this->stereoCamera = stereoCamera;
 	}
 
-	cv::Mat subtractBackground(cv::Mat image);
+	void setBackgroundImages(Mat backgroundImage1, Mat backgroundImage2);
+
+	Mat subtractBackground(Mat image, Mat backgroundImage);
 
 	DetectorResults* detect();
 };

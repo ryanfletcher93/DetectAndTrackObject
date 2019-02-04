@@ -21,8 +21,8 @@ void StereoCamera::getImageFromCameras() {
 	tempImage1 = cam1->getSingleImage();
 	tempImage2 = cam2->getSingleImage();
 
-	cv::cvtColor(tempImage1, this->images[0], CV_BGR2HSV);
-	cv::cvtColor(tempImage2, this->images[1], CV_BGR2HSV);
+	cv::cvtColor(tempImage1, this->images[0], CV_RGB2HSV);
+	cv::cvtColor(tempImage2, this->images[1], CV_RGB2HSV);
 }
 
 /*
