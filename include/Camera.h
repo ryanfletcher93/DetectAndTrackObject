@@ -25,9 +25,10 @@ protected:
 
 	virtual bool openCamera() = 0;
 	virtual bool closeCamera() = 0;
-	virtual Mat getImage() = 0;
 
 public:
+	virtual Mat getImage() = 0;
+
 	virtual Mat getSingleImage();
 	virtual Mat getImageOnButtonPress();
 	virtual vector<Mat> getImagesOnButtonPress(int numImages);
@@ -47,10 +48,11 @@ private:
 protected:
 	bool openCamera();
 	bool closeCamera();
-	Mat getImage();
 
 public:
 	IpCamera(string ipAddr, string intrinsicsFilePath);
+
+	Mat getImage();
 
 	string getIpAddr() {
 		return this->ipAddr;
@@ -70,10 +72,11 @@ private:
 protected:
 	bool openCamera();
 	bool closeCamera();
-	Mat getImage();
 
 public:
 	VideoFromFile(string videoFilePath, string intrinsicsFilePath);
+
+	Mat getImage();
 
 	string getFileName() {
 		return this->fileName;
@@ -94,12 +97,13 @@ private:
 protected:
 	bool openCamera();
 	bool closeCamera();
-	Mat getImage();
 
 public:
 	/*
 	 */
 	SingleImage(string imageFilePath, string intrinsicsFilePath);
+
+	Mat getImage();
 };
 
 #endif // CAMERA_H

@@ -5,6 +5,8 @@
 
 #include "StereoCamera.h"
 
+#include <vector>
+
 using std::string;
 
 using cv::Mat;
@@ -97,6 +99,25 @@ public:
 	Mat subtractBackground(Mat image, Mat backgroundImage);
 
 	DetectorResults* detect();
+};
+
+
+/*
+ *
+ */
+class ColourDetector : public Detector{
+private:
+
+
+protected:
+	//std::vector<cv::KeyPoint> identifyObjects(cv::Mat image);
+
+public:
+	std::vector<cv::KeyPoint> identifyObjectsByColour(cv::Mat image, cv::Scalar min, cv::Scalar max);
+
+	void performManualColourAnalysis(cv::Mat image);
+
+	DetectorResults* detect() {};
 };
 
 

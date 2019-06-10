@@ -26,19 +26,21 @@ using cv::Mat;
 
 enum class InputType {Camera,Video,Image};
 
+enum class ActionType {DetectColour, DetectShape, DetectAndTrack};
+
 class Runner {
 private:
 	StereoCamera * stereoCamera;
 	Detector * detector;
 	Tracker * tracker;
 
+	Camera* cam1;
+	Camera* cam2;
+
 
 public:
 	Runner() {
 		InputType inputType = InputType::Image;
-
-		Camera* cam1;
-		Camera* cam2;
 
 		if (inputType == InputType::Camera) {
 			cam1 = new IpCamera(CAM1_IPADDR, CAM1_INTRINSICS_PATH);
@@ -52,19 +54,29 @@ public:
 			cam1 = new SingleImage(IMAGE1_PATH, CAM1_INTRINSICS_PATH);
 			cam2 = new SingleImage(IMAGE2_PATH, CAM2_INTRINSICS_PATH);
 		}
-
-		stereoCamera = new StereoCameraWithBackground(cam1, cam2, "../src/calibration/cameraSetup1/stereo/calibResults");
-		stereoCamera->setStereoIntrinsicsFromFile(STEREO_INTRINSICS_PATH);
-
-		//
-		Mat backgroundImg1 = cv::imread(BACKGROUND_IMG_1);
-		Mat backgroundImg2 = cv::imread(BACKGROUND_IMG_2);
-		detector = new BackgroundSubtractionDetector(stereoCamera);
-		detector->setBackgroundImages(backgroundImg1, backgroundImg2);
-
-		tracker = new KalmanTracker();
 	}
 
+	//
+	void performAction(ActionType actionType) {
+		if (actionType == ActionType::DetectColour) {
+			ColourDetector colourDetector;
+			colourDetector.identifyObjectsByColour(cam1->getImage(), cv::Scalar(150, 110, 90), cv::Scalar(180, 255, 255));
+		}
+		else if (actionType == ActionType::DetectAndTrack) {
+			stereoCamera = new StereoCameraWithBackground(cam1, cam2, "../src/calibration/cameraSetup1/stereo/calibResults");
+			stereoCamera->setStereoIntrinsicsFromFile(STEREO_INTRINSICS_PATH);
+
+			//
+			Mat backgroundImg1 = cv::imread(BACKGROUND_IMG_1);
+			Mat backgroundImg2 = cv::imread(BACKGROUND_IMG_2);
+			detector = new BackgroundSubtractionDetector(stereoCamera);
+			detector->setBackgroundImages(backgroundImg1, backgroundImg2);
+
+			tracker = new KalmanTracker();
+		}
+	}
+
+	/*
 	void startTracking() {
 		int numRemainingImages = 1;
 		while (numRemainingImages >= 0) {
@@ -78,6 +90,7 @@ public:
 			numRemainingImages--;
 		}
 	}
+	*/
 };
 
 
@@ -85,7 +98,7 @@ public:
 int main() {
 
 	Runner runner;
-	runner.startTracking();
+	runner.performAction(ActionType::DetectColour);
 
 	std::cout << &runner << std::endl;
 

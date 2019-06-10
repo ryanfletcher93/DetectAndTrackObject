@@ -25,6 +25,6 @@ bool SingleImage::closeCamera() {
 
 Mat SingleImage::getImage() {
 	Mat img;
-	img = cv::imread(filePath);
+	img = cv::imread(filePath, CV_LOAD_IMAGE_COLOR);
 	return img;
 }
