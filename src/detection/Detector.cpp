@@ -17,22 +17,17 @@ using cv::createTrackbar;
 std::vector<cv::KeyPoint> Detector::identifyObjects(cv::Mat image) {
 	std::vector<cv::KeyPoint> keypoints;
 
-	//cv::bitwise_not(image, image);
-
 	cv::SimpleBlobDetector::Params params;
-	params.blobColor = 1;
-	params.minDistBetweenBlobs = 1;
+	params.blobColor = 0;
 	params.filterByInertia = false;
 	params.filterByConvexity = false;
 	params.filterByColor = false;
 	params.filterByCircularity = false;
 	params.filterByArea = true;
-	params.minArea = 10;
-	params.maxArea = 10000000;
+	params.minArea = 1000;
+	params.maxArea = 100000000000000000;
 
 	cv::SimpleBlobDetector blobDetector(params);
-	cv::imshow("", image);
-	cv::waitKey();
 	blobDetector.detect(image, keypoints);
 
 	std::cout << keypoints.size() << std::endl;
@@ -40,7 +35,7 @@ std::vector<cv::KeyPoint> Detector::identifyObjects(cv::Mat image) {
 	Mat im_with_keypoints;
 	cv::drawKeypoints( image, keypoints, im_with_keypoints, cv::Scalar(0,0,255), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
 
-	if (true) {
+	if (false) {
 		cv::imshow("", im_with_keypoints);
 		cv::waitKey();
 	}
@@ -116,6 +111,9 @@ void ColourDetector::performManualColourAnalysis(cv::Mat image) {
 
 
 std::vector<cv::KeyPoint> ColourDetector::identifyObjectsByColour(cv::Mat image, cv::Scalar min, cv::Scalar max) {
+
+	bool showImages = false;
+
 	cv::Mat hsvImage;
 	cv::cvtColor(image, hsvImage, cv::COLOR_BGR2HSV);
 
@@ -123,8 +121,10 @@ std::vector<cv::KeyPoint> ColourDetector::identifyObjectsByColour(cv::Mat image,
 	cv::inRange(hsvImage, min, max, thresholdedImage);
 
 
-	cv::imshow("Thresholded image", thresholdedImage);
-	cv::waitKey();
+	if (showImages) {
+		cv::imshow("Thresholded image", thresholdedImage);
+		cv::waitKey();
+	}
 
 	std::vector<cv::KeyPoint> res = identifyObjects(thresholdedImage);
 	return res;

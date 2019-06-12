@@ -59,8 +59,51 @@ public:
 	//
 	void performAction(ActionType actionType) {
 		if (actionType == ActionType::DetectColour) {
+			cv::Mat image1 = cam1->getImage();
+			cv::Mat image2 = cam2->getImage();
+
+			cv::Scalar minRedThreshold = cv::Scalar(150, 110, 90);
+			cv::Scalar maxRedThreshold = cv::Scalar(180, 255, 255);
+
+			cv::Scalar minYellowThresh = cv::Scalar(25, 112, 44);
+			cv::Scalar maxYellowThresh = cv::Scalar(50, 230, 225);
+
+			std::vector<cv::KeyPoint> kp1, kp2;
 			ColourDetector colourDetector;
-			colourDetector.identifyObjectsByColour(cam1->getImage(), cv::Scalar(150, 110, 90), cv::Scalar(180, 255, 255));
+			//kp1 = colourDetector.identifyObjectsByColour(image1, minRedThreshold, maxRedThreshold);
+			//kp2 = colourDetector.identifyObjectsByColour(image2, minRedThreshold, maxRedThreshold);
+			kp1 = colourDetector.identifyObjectsByColour(image1, minYellowThresh, maxYellowThresh);
+			kp2 = colourDetector.identifyObjectsByColour(image2, minYellowThresh, maxYellowThresh);
+
+			cv::Mat K1, K2;
+			cv::Mat D1, D2;
+			getCameraIntrinsics(K1, D1, K2, D2);
+
+			cv::Mat R;
+			cv::Vec3d T;
+			getStereoCameraIntrinsics(R, T);
+
+			cv::Mat R1, R2, P1, P2, Q;
+			cv::stereoRectify(K1, D1, K2, D2, image1.size(), R, T, R1, R2, P1, P2, Q);
+
+			saveStereoParameters(R1, R2, P1, P2, Q);
+
+			std::vector<cv::Vec2f> coords1, coords2;
+			for (auto it = kp1.begin(); it!=kp1.end(); it++) {
+			    coords1.push_back(it->pt);
+			}
+			for (auto it = kp2.begin(); it!=kp2.end(); it++) {
+			    coords2.push_back(it->pt);
+			}
+
+			cv::Mat res;
+			cv::triangulatePoints(P1, P2, coords1, coords2, res);
+
+			cv::Vec4d triangCoords = res.col(0);
+
+			for (int i=0; i<3; i++) {
+				std::cout << triangCoords.row(i) / triangCoords.row(3) << std::endl;
+			}
 		}
 		else if (actionType == ActionType::DetectAndTrack) {
 			stereoCamera = new StereoCameraWithBackground(cam1, cam2, "../src/calibration/cameraSetup1/stereo/calibResults");
@@ -75,6 +118,42 @@ public:
 			tracker = new KalmanTracker();
 		}
 	}
+
+
+	void getCameraIntrinsics(cv::Mat& K1, cv::Mat& D1, cv::Mat& K2, cv::Mat& D2) {
+		std::string calibPath = "/home/ryan/Documents/Prog Projects/ImageProcessing/src/calibration/cameraSetup1/";
+		std::string fileCam1 = calibPath + "cam1/calibResults";
+		cv::FileStorage fs1(fileCam1, cv::FileStorage::READ);
+
+		fs1["K"] >> K1;
+		fs1["D"] >> D1;
+
+		std::string fileCam2 = calibPath + "cam2/calibResults";
+		cv::FileStorage fs2(fileCam2, cv::FileStorage::READ);
+
+		fs2["K"] >> K2;
+		fs2["D"] >> D2;
+	}
+
+	void getStereoCameraIntrinsics(cv::Mat& R, cv::Vec3d& T) {
+		std::string calibPath = "/home/ryan/Documents/Prog Projects/ImageProcessing/src/calibration/cameraSetup1/stereo/StereoCameraProperties";
+		cv::FileStorage fs(calibPath, cv::FileStorage::READ);
+
+		fs["R"] >> R;
+		fs["T"] >> T;
+	}
+
+	void saveStereoParameters(cv::Mat R1, cv::Mat R2, cv::Mat P1, cv::Mat P2, cv::Mat Q) {
+		std::string calibPath = "/home/ryan/Documents/Prog Projects/ImageProcessing/src/calibration/cameraSetup1/stereo/StereoCameraProperties";
+		cv::FileStorage fs(calibPath, cv::FileStorage::APPEND);
+
+		fs << "R1" << R1;
+		fs << "R2" << R2;
+		fs << "P1" << P1;
+		fs << "P2" << P2;
+		fs << "Q" << Q;
+	}
+
 
 	/*
 	void startTracking() {
@@ -92,7 +171,6 @@ public:
 	}
 	*/
 };
-
 
 
 int main() {
