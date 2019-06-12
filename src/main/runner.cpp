@@ -86,7 +86,8 @@ public:
 			cv::Mat R1, R2, P1, P2, Q;
 			cv::stereoRectify(K1, D1, K2, D2, image1.size(), R, T, R1, R2, P1, P2, Q);
 
-			saveStereoParameters(R1, R2, P1, P2, Q);
+			// Do not do this more than once as will keep appending same data to file
+			//saveStereoParameters(R1, R2, P1, P2, Q);
 
 			std::vector<cv::Vec2f> coords1, coords2;
 			for (auto it = kp1.begin(); it!=kp1.end(); it++) {
