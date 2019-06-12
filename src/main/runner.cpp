@@ -102,7 +102,7 @@ public:
 			cv::Vec4d triangCoords = res.col(0);
 
 			for (int i=0; i<3; i++) {
-				std::cout << triangCoords.row(i) / triangCoords.row(3) << std::endl;
+				std::cout << (triangCoords[i] / triangCoords[3]) << std::endl;
 			}
 		}
 		else if (actionType == ActionType::DetectAndTrack) {
