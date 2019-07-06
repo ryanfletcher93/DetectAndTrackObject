@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named detectionTest
+
+# Build rule for target.
+detectionTest: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 detectionTest
+.PHONY : detectionTest
+
+# fast build rule for target.
+detectionTest/fast:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/build
+.PHONY : detectionTest/fast
+
+#=============================================================================
 # Target rules for targets named objectTracker
 
 # Build rule for target.
@@ -129,6 +142,7 @@ src/actionEndEffector/ActionEndEffector.o: src/actionEndEffector/ActionEndEffect
 
 # target to build an object file
 src/actionEndEffector/ActionEndEffector.cpp.o:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/actionEndEffector/ActionEndEffector.cpp.o
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/actionEndEffector/ActionEndEffector.cpp.o
 .PHONY : src/actionEndEffector/ActionEndEffector.cpp.o
 
@@ -138,6 +152,7 @@ src/actionEndEffector/ActionEndEffector.i: src/actionEndEffector/ActionEndEffect
 
 # target to preprocess a source file
 src/actionEndEffector/ActionEndEffector.cpp.i:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/actionEndEffector/ActionEndEffector.cpp.i
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/actionEndEffector/ActionEndEffector.cpp.i
 .PHONY : src/actionEndEffector/ActionEndEffector.cpp.i
 
@@ -147,6 +162,7 @@ src/actionEndEffector/ActionEndEffector.s: src/actionEndEffector/ActionEndEffect
 
 # target to generate assembly for a file
 src/actionEndEffector/ActionEndEffector.cpp.s:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/actionEndEffector/ActionEndEffector.cpp.s
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/actionEndEffector/ActionEndEffector.cpp.s
 .PHONY : src/actionEndEffector/ActionEndEffector.cpp.s
 
@@ -156,6 +172,7 @@ src/actionEndEffector/ArduinoFire.o: src/actionEndEffector/ArduinoFire.cpp.o
 
 # target to build an object file
 src/actionEndEffector/ArduinoFire.cpp.o:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/actionEndEffector/ArduinoFire.cpp.o
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/actionEndEffector/ArduinoFire.cpp.o
 .PHONY : src/actionEndEffector/ArduinoFire.cpp.o
 
@@ -165,6 +182,7 @@ src/actionEndEffector/ArduinoFire.i: src/actionEndEffector/ArduinoFire.cpp.i
 
 # target to preprocess a source file
 src/actionEndEffector/ArduinoFire.cpp.i:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/actionEndEffector/ArduinoFire.cpp.i
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/actionEndEffector/ArduinoFire.cpp.i
 .PHONY : src/actionEndEffector/ArduinoFire.cpp.i
 
@@ -174,6 +192,7 @@ src/actionEndEffector/ArduinoFire.s: src/actionEndEffector/ArduinoFire.cpp.s
 
 # target to generate assembly for a file
 src/actionEndEffector/ArduinoFire.cpp.s:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/actionEndEffector/ArduinoFire.cpp.s
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/actionEndEffector/ArduinoFire.cpp.s
 .PHONY : src/actionEndEffector/ArduinoFire.cpp.s
 
@@ -183,6 +202,7 @@ src/camera/Camera.o: src/camera/Camera.cpp.o
 
 # target to build an object file
 src/camera/Camera.cpp.o:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/camera/Camera.cpp.o
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/camera/Camera.cpp.o
 .PHONY : src/camera/Camera.cpp.o
 
@@ -192,6 +212,7 @@ src/camera/Camera.i: src/camera/Camera.cpp.i
 
 # target to preprocess a source file
 src/camera/Camera.cpp.i:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/camera/Camera.cpp.i
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/camera/Camera.cpp.i
 .PHONY : src/camera/Camera.cpp.i
 
@@ -201,6 +222,7 @@ src/camera/Camera.s: src/camera/Camera.cpp.s
 
 # target to generate assembly for a file
 src/camera/Camera.cpp.s:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/camera/Camera.cpp.s
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/camera/Camera.cpp.s
 .PHONY : src/camera/Camera.cpp.s
 
@@ -210,6 +232,7 @@ src/camera/IpCamera.o: src/camera/IpCamera.cpp.o
 
 # target to build an object file
 src/camera/IpCamera.cpp.o:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/camera/IpCamera.cpp.o
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/camera/IpCamera.cpp.o
 .PHONY : src/camera/IpCamera.cpp.o
 
@@ -219,6 +242,7 @@ src/camera/IpCamera.i: src/camera/IpCamera.cpp.i
 
 # target to preprocess a source file
 src/camera/IpCamera.cpp.i:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/camera/IpCamera.cpp.i
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/camera/IpCamera.cpp.i
 .PHONY : src/camera/IpCamera.cpp.i
 
@@ -228,6 +252,7 @@ src/camera/IpCamera.s: src/camera/IpCamera.cpp.s
 
 # target to generate assembly for a file
 src/camera/IpCamera.cpp.s:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/camera/IpCamera.cpp.s
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/camera/IpCamera.cpp.s
 .PHONY : src/camera/IpCamera.cpp.s
 
@@ -237,6 +262,7 @@ src/camera/SingleImage.o: src/camera/SingleImage.cpp.o
 
 # target to build an object file
 src/camera/SingleImage.cpp.o:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/camera/SingleImage.cpp.o
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/camera/SingleImage.cpp.o
 .PHONY : src/camera/SingleImage.cpp.o
 
@@ -246,6 +272,7 @@ src/camera/SingleImage.i: src/camera/SingleImage.cpp.i
 
 # target to preprocess a source file
 src/camera/SingleImage.cpp.i:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/camera/SingleImage.cpp.i
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/camera/SingleImage.cpp.i
 .PHONY : src/camera/SingleImage.cpp.i
 
@@ -255,6 +282,7 @@ src/camera/SingleImage.s: src/camera/SingleImage.cpp.s
 
 # target to generate assembly for a file
 src/camera/SingleImage.cpp.s:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/camera/SingleImage.cpp.s
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/camera/SingleImage.cpp.s
 .PHONY : src/camera/SingleImage.cpp.s
 
@@ -264,6 +292,7 @@ src/camera/VideoFromFile.o: src/camera/VideoFromFile.cpp.o
 
 # target to build an object file
 src/camera/VideoFromFile.cpp.o:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/camera/VideoFromFile.cpp.o
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/camera/VideoFromFile.cpp.o
 .PHONY : src/camera/VideoFromFile.cpp.o
 
@@ -273,6 +302,7 @@ src/camera/VideoFromFile.i: src/camera/VideoFromFile.cpp.i
 
 # target to preprocess a source file
 src/camera/VideoFromFile.cpp.i:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/camera/VideoFromFile.cpp.i
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/camera/VideoFromFile.cpp.i
 .PHONY : src/camera/VideoFromFile.cpp.i
 
@@ -282,6 +312,7 @@ src/camera/VideoFromFile.s: src/camera/VideoFromFile.cpp.s
 
 # target to generate assembly for a file
 src/camera/VideoFromFile.cpp.s:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/camera/VideoFromFile.cpp.s
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/camera/VideoFromFile.cpp.s
 .PHONY : src/camera/VideoFromFile.cpp.s
 
@@ -291,6 +322,7 @@ src/detection/BackgroundSubtractionDetector.o: src/detection/BackgroundSubtracti
 
 # target to build an object file
 src/detection/BackgroundSubtractionDetector.cpp.o:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/detection/BackgroundSubtractionDetector.cpp.o
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/detection/BackgroundSubtractionDetector.cpp.o
 .PHONY : src/detection/BackgroundSubtractionDetector.cpp.o
 
@@ -300,6 +332,7 @@ src/detection/BackgroundSubtractionDetector.i: src/detection/BackgroundSubtracti
 
 # target to preprocess a source file
 src/detection/BackgroundSubtractionDetector.cpp.i:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/detection/BackgroundSubtractionDetector.cpp.i
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/detection/BackgroundSubtractionDetector.cpp.i
 .PHONY : src/detection/BackgroundSubtractionDetector.cpp.i
 
@@ -309,6 +342,7 @@ src/detection/BackgroundSubtractionDetector.s: src/detection/BackgroundSubtracti
 
 # target to generate assembly for a file
 src/detection/BackgroundSubtractionDetector.cpp.s:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/detection/BackgroundSubtractionDetector.cpp.s
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/detection/BackgroundSubtractionDetector.cpp.s
 .PHONY : src/detection/BackgroundSubtractionDetector.cpp.s
 
@@ -318,6 +352,7 @@ src/detection/Detector.o: src/detection/Detector.cpp.o
 
 # target to build an object file
 src/detection/Detector.cpp.o:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/detection/Detector.cpp.o
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/detection/Detector.cpp.o
 .PHONY : src/detection/Detector.cpp.o
 
@@ -327,6 +362,7 @@ src/detection/Detector.i: src/detection/Detector.cpp.i
 
 # target to preprocess a source file
 src/detection/Detector.cpp.i:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/detection/Detector.cpp.i
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/detection/Detector.cpp.i
 .PHONY : src/detection/Detector.cpp.i
 
@@ -336,6 +372,7 @@ src/detection/Detector.s: src/detection/Detector.cpp.s
 
 # target to generate assembly for a file
 src/detection/Detector.cpp.s:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/detection/Detector.cpp.s
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/detection/Detector.cpp.s
 .PHONY : src/detection/Detector.cpp.s
 
@@ -345,6 +382,7 @@ src/detection/ThresholdDetector.o: src/detection/ThresholdDetector.cpp.o
 
 # target to build an object file
 src/detection/ThresholdDetector.cpp.o:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/detection/ThresholdDetector.cpp.o
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/detection/ThresholdDetector.cpp.o
 .PHONY : src/detection/ThresholdDetector.cpp.o
 
@@ -354,6 +392,7 @@ src/detection/ThresholdDetector.i: src/detection/ThresholdDetector.cpp.i
 
 # target to preprocess a source file
 src/detection/ThresholdDetector.cpp.i:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/detection/ThresholdDetector.cpp.i
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/detection/ThresholdDetector.cpp.i
 .PHONY : src/detection/ThresholdDetector.cpp.i
 
@@ -363,35 +402,63 @@ src/detection/ThresholdDetector.s: src/detection/ThresholdDetector.cpp.s
 
 # target to generate assembly for a file
 src/detection/ThresholdDetector.cpp.s:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/detection/ThresholdDetector.cpp.s
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/detection/ThresholdDetector.cpp.s
 .PHONY : src/detection/ThresholdDetector.cpp.s
 
-src/main/runner.o: src/main/runner.cpp.o
+src/main/detectionTest.o: src/main/detectionTest.cpp.o
 
-.PHONY : src/main/runner.o
+.PHONY : src/main/detectionTest.o
 
 # target to build an object file
-src/main/runner.cpp.o:
-	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/main/runner.cpp.o
-.PHONY : src/main/runner.cpp.o
+src/main/detectionTest.cpp.o:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/main/detectionTest.cpp.o
+.PHONY : src/main/detectionTest.cpp.o
 
-src/main/runner.i: src/main/runner.cpp.i
+src/main/detectionTest.i: src/main/detectionTest.cpp.i
 
-.PHONY : src/main/runner.i
+.PHONY : src/main/detectionTest.i
 
 # target to preprocess a source file
-src/main/runner.cpp.i:
-	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/main/runner.cpp.i
-.PHONY : src/main/runner.cpp.i
+src/main/detectionTest.cpp.i:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/main/detectionTest.cpp.i
+.PHONY : src/main/detectionTest.cpp.i
 
-src/main/runner.s: src/main/runner.cpp.s
+src/main/detectionTest.s: src/main/detectionTest.cpp.s
 
-.PHONY : src/main/runner.s
+.PHONY : src/main/detectionTest.s
 
 # target to generate assembly for a file
-src/main/runner.cpp.s:
-	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/main/runner.cpp.s
-.PHONY : src/main/runner.cpp.s
+src/main/detectionTest.cpp.s:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/main/detectionTest.cpp.s
+.PHONY : src/main/detectionTest.cpp.s
+
+src/main/trackerRunner.o: src/main/trackerRunner.cpp.o
+
+.PHONY : src/main/trackerRunner.o
+
+# target to build an object file
+src/main/trackerRunner.cpp.o:
+	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/main/trackerRunner.cpp.o
+.PHONY : src/main/trackerRunner.cpp.o
+
+src/main/trackerRunner.i: src/main/trackerRunner.cpp.i
+
+.PHONY : src/main/trackerRunner.i
+
+# target to preprocess a source file
+src/main/trackerRunner.cpp.i:
+	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/main/trackerRunner.cpp.i
+.PHONY : src/main/trackerRunner.cpp.i
+
+src/main/trackerRunner.s: src/main/trackerRunner.cpp.s
+
+.PHONY : src/main/trackerRunner.s
+
+# target to generate assembly for a file
+src/main/trackerRunner.cpp.s:
+	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/main/trackerRunner.cpp.s
+.PHONY : src/main/trackerRunner.cpp.s
 
 src/motor/AngleCalculator.o: src/motor/AngleCalculator.cpp.o
 
@@ -399,6 +466,7 @@ src/motor/AngleCalculator.o: src/motor/AngleCalculator.cpp.o
 
 # target to build an object file
 src/motor/AngleCalculator.cpp.o:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/motor/AngleCalculator.cpp.o
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/motor/AngleCalculator.cpp.o
 .PHONY : src/motor/AngleCalculator.cpp.o
 
@@ -408,6 +476,7 @@ src/motor/AngleCalculator.i: src/motor/AngleCalculator.cpp.i
 
 # target to preprocess a source file
 src/motor/AngleCalculator.cpp.i:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/motor/AngleCalculator.cpp.i
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/motor/AngleCalculator.cpp.i
 .PHONY : src/motor/AngleCalculator.cpp.i
 
@@ -417,6 +486,7 @@ src/motor/AngleCalculator.s: src/motor/AngleCalculator.cpp.s
 
 # target to generate assembly for a file
 src/motor/AngleCalculator.cpp.s:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/motor/AngleCalculator.cpp.s
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/motor/AngleCalculator.cpp.s
 .PHONY : src/motor/AngleCalculator.cpp.s
 
@@ -426,6 +496,7 @@ src/motor/Motor.o: src/motor/Motor.cpp.o
 
 # target to build an object file
 src/motor/Motor.cpp.o:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/motor/Motor.cpp.o
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/motor/Motor.cpp.o
 .PHONY : src/motor/Motor.cpp.o
 
@@ -435,6 +506,7 @@ src/motor/Motor.i: src/motor/Motor.cpp.i
 
 # target to preprocess a source file
 src/motor/Motor.cpp.i:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/motor/Motor.cpp.i
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/motor/Motor.cpp.i
 .PHONY : src/motor/Motor.cpp.i
 
@@ -444,6 +516,7 @@ src/motor/Motor.s: src/motor/Motor.cpp.s
 
 # target to generate assembly for a file
 src/motor/Motor.cpp.s:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/motor/Motor.cpp.s
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/motor/Motor.cpp.s
 .PHONY : src/motor/Motor.cpp.s
 
@@ -453,6 +526,7 @@ src/motor/ServoMotor.o: src/motor/ServoMotor.cpp.o
 
 # target to build an object file
 src/motor/ServoMotor.cpp.o:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/motor/ServoMotor.cpp.o
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/motor/ServoMotor.cpp.o
 .PHONY : src/motor/ServoMotor.cpp.o
 
@@ -462,6 +536,7 @@ src/motor/ServoMotor.i: src/motor/ServoMotor.cpp.i
 
 # target to preprocess a source file
 src/motor/ServoMotor.cpp.i:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/motor/ServoMotor.cpp.i
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/motor/ServoMotor.cpp.i
 .PHONY : src/motor/ServoMotor.cpp.i
 
@@ -471,6 +546,7 @@ src/motor/ServoMotor.s: src/motor/ServoMotor.cpp.s
 
 # target to generate assembly for a file
 src/motor/ServoMotor.cpp.s:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/motor/ServoMotor.cpp.s
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/motor/ServoMotor.cpp.s
 .PHONY : src/motor/ServoMotor.cpp.s
 
@@ -480,6 +556,7 @@ src/stereoCamera/StereoCamera.o: src/stereoCamera/StereoCamera.cpp.o
 
 # target to build an object file
 src/stereoCamera/StereoCamera.cpp.o:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/stereoCamera/StereoCamera.cpp.o
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/stereoCamera/StereoCamera.cpp.o
 .PHONY : src/stereoCamera/StereoCamera.cpp.o
 
@@ -489,6 +566,7 @@ src/stereoCamera/StereoCamera.i: src/stereoCamera/StereoCamera.cpp.i
 
 # target to preprocess a source file
 src/stereoCamera/StereoCamera.cpp.i:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/stereoCamera/StereoCamera.cpp.i
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/stereoCamera/StereoCamera.cpp.i
 .PHONY : src/stereoCamera/StereoCamera.cpp.i
 
@@ -498,6 +576,7 @@ src/stereoCamera/StereoCamera.s: src/stereoCamera/StereoCamera.cpp.s
 
 # target to generate assembly for a file
 src/stereoCamera/StereoCamera.cpp.s:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/stereoCamera/StereoCamera.cpp.s
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/stereoCamera/StereoCamera.cpp.s
 .PHONY : src/stereoCamera/StereoCamera.cpp.s
 
@@ -507,6 +586,7 @@ src/stereoCamera/StereoCameraWithBackground.o: src/stereoCamera/StereoCameraWith
 
 # target to build an object file
 src/stereoCamera/StereoCameraWithBackground.cpp.o:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/stereoCamera/StereoCameraWithBackground.cpp.o
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/stereoCamera/StereoCameraWithBackground.cpp.o
 .PHONY : src/stereoCamera/StereoCameraWithBackground.cpp.o
 
@@ -516,6 +596,7 @@ src/stereoCamera/StereoCameraWithBackground.i: src/stereoCamera/StereoCameraWith
 
 # target to preprocess a source file
 src/stereoCamera/StereoCameraWithBackground.cpp.i:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/stereoCamera/StereoCameraWithBackground.cpp.i
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/stereoCamera/StereoCameraWithBackground.cpp.i
 .PHONY : src/stereoCamera/StereoCameraWithBackground.cpp.i
 
@@ -525,6 +606,7 @@ src/stereoCamera/StereoCameraWithBackground.s: src/stereoCamera/StereoCameraWith
 
 # target to generate assembly for a file
 src/stereoCamera/StereoCameraWithBackground.cpp.s:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/stereoCamera/StereoCameraWithBackground.cpp.s
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/stereoCamera/StereoCameraWithBackground.cpp.s
 .PHONY : src/stereoCamera/StereoCameraWithBackground.cpp.s
 
@@ -534,6 +616,7 @@ src/tracking/KalmanTracker.o: src/tracking/KalmanTracker.cpp.o
 
 # target to build an object file
 src/tracking/KalmanTracker.cpp.o:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/tracking/KalmanTracker.cpp.o
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/tracking/KalmanTracker.cpp.o
 .PHONY : src/tracking/KalmanTracker.cpp.o
 
@@ -543,6 +626,7 @@ src/tracking/KalmanTracker.i: src/tracking/KalmanTracker.cpp.i
 
 # target to preprocess a source file
 src/tracking/KalmanTracker.cpp.i:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/tracking/KalmanTracker.cpp.i
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/tracking/KalmanTracker.cpp.i
 .PHONY : src/tracking/KalmanTracker.cpp.i
 
@@ -552,6 +636,7 @@ src/tracking/KalmanTracker.s: src/tracking/KalmanTracker.cpp.s
 
 # target to generate assembly for a file
 src/tracking/KalmanTracker.cpp.s:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/tracking/KalmanTracker.cpp.s
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/tracking/KalmanTracker.cpp.s
 .PHONY : src/tracking/KalmanTracker.cpp.s
 
@@ -561,6 +646,7 @@ src/tracking/Tracker.o: src/tracking/Tracker.cpp.o
 
 # target to build an object file
 src/tracking/Tracker.cpp.o:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/tracking/Tracker.cpp.o
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/tracking/Tracker.cpp.o
 .PHONY : src/tracking/Tracker.cpp.o
 
@@ -570,6 +656,7 @@ src/tracking/Tracker.i: src/tracking/Tracker.cpp.i
 
 # target to preprocess a source file
 src/tracking/Tracker.cpp.i:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/tracking/Tracker.cpp.i
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/tracking/Tracker.cpp.i
 .PHONY : src/tracking/Tracker.cpp.i
 
@@ -579,6 +666,7 @@ src/tracking/Tracker.s: src/tracking/Tracker.cpp.s
 
 # target to generate assembly for a file
 src/tracking/Tracker.cpp.s:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/tracking/Tracker.cpp.s
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/tracking/Tracker.cpp.s
 .PHONY : src/tracking/Tracker.cpp.s
 
@@ -590,6 +678,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... detectionTest"
 	@echo "... objectTracker"
 	@echo "... src/actionEndEffector/ActionEndEffector.o"
 	@echo "... src/actionEndEffector/ActionEndEffector.i"
@@ -618,9 +707,12 @@ help:
 	@echo "... src/detection/ThresholdDetector.o"
 	@echo "... src/detection/ThresholdDetector.i"
 	@echo "... src/detection/ThresholdDetector.s"
-	@echo "... src/main/runner.o"
-	@echo "... src/main/runner.i"
-	@echo "... src/main/runner.s"
+	@echo "... src/main/detectionTest.o"
+	@echo "... src/main/detectionTest.i"
+	@echo "... src/main/detectionTest.s"
+	@echo "... src/main/trackerRunner.o"
+	@echo "... src/main/trackerRunner.i"
+	@echo "... src/main/trackerRunner.s"
 	@echo "... src/motor/AngleCalculator.o"
 	@echo "... src/motor/AngleCalculator.i"
 	@echo "... src/motor/AngleCalculator.s"

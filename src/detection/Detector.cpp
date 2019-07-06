@@ -120,12 +120,14 @@ std::vector<cv::KeyPoint> ColourDetector::identifyObjectsByColour(cv::Mat image,
 	cv::Mat thresholdedImage;
 	cv::inRange(hsvImage, min, max, thresholdedImage);
 
+	std::vector<cv::KeyPoint> res = identifyObjects(thresholdedImage);
 
-	if (showImages) {
-		cv::imshow("Thresholded image", thresholdedImage);
+	if (showImages && res.size() != 0) {
+		cv::Mat keypointImage;
+		cv::drawKeypoints(thresholdedImage, res, keypointImage);
+		cv::imshow("Thresholded image", keypointImage);
 		cv::waitKey();
 	}
 
-	std::vector<cv::KeyPoint> res = identifyObjects(thresholdedImage);
 	return res;
 }

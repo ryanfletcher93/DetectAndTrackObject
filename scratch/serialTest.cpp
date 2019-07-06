@@ -1,19 +1,20 @@
-#include "Motor.h"
-
 #include <stdlib.h>
+#include <string.h>     // string function definitions
 #include <unistd.h>     // UNIX standard function definitions
 #include <fcntl.h>      // File control definitions
 #include <errno.h>      // Error number definitions
 #include <termios.h>    // POSIX terminal control definitions
 #include <iostream>
+#include <chrono>
+#include <thread>
 #include <string>
 
-using std::string;
+int main() {
 
-ServoMotor::ServoMotor() {
-	USB = open("/dev/ttyACM0", O_RDWR| O_NOCTTY);
+	int USB = open("/dev/ttyACM0", O_RDWR| O_NOCTTY);
 
-	usleep (2000000); 
+	struct termios tty;
+	struct termios tty_old;
 	memset (&tty, 0, sizeof tty);
 
 	/* Error Handling */
@@ -47,33 +48,18 @@ ServoMotor::ServoMotor() {
 	if ( tcsetattr ( USB, TCSANOW, &tty ) != 0) {
 	   std::cout << "Error " << errno << " from tcsetattr" << std::endl;
 	}
-}
 
-ServoMotor::~ServoMotor() {
-	//close(USB);
-}
+	while (true) {
+		std::string a, b;
+		std::cin >> a;
+		std::cin >> b;
+		std::string res = a + ':' + b + ';';
+		std::cout << res << std::endl;
+		char * resCharPtr = strdup(res.c_str());
+		int n_written = write(USB, resCharPtr, sizeof(resCharPtr) - 1);
+		std::cout << n_written << std::endl;
+	}
+	
 
-
-/**
- * Move motors to parameters angles, angles are in degrees
- */
-void ServoMotor::moveMotorToPosition(float panAngle, float tiltAngle) {
-
-	char angleDelimeter = ':';
-	char lineDelimeter = ';';
-
-	string panString = std::to_string((int)panAngle);
-	string tiltString = std::to_string((int)tiltAngle);
-
-	string resStr = panString + ':' + tiltString + ';';
-
-	std::cout << resStr << std::endl;
-
-	char *resChar = strdup(resStr.c_str());
-	int n_written = write(USB, resChar, sizeof(resChar) -1);
-
-	usleep (100000); 
-
-	std::cout << n_written << std::endl;
-
+	return 0;
 }

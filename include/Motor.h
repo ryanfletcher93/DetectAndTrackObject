@@ -4,24 +4,30 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
 
-class Motor {
-private:
+#include <termios.h>
 
+class Motor {
+protected:
+	int USB;
+
+	struct termios tty;
+	struct termios tty_old;
 
 public:
 	Motor();
 
-	virtual void moveMotorToPosition(int angle) = 0;
+	virtual void moveMotorToPosition(float panAngle, float tiltAngle) = 0;
 };
 
 
-class ServoMotor : Motor {
+class ServoMotor : public Motor {
 private:
 
 public:
 	ServoMotor();
+	~ServoMotor();
 
-	void moveMotorToPosition(int angle);
+	void moveMotorToPosition(float panAngle, float tiltAngle);
 };
 
 #endif //MOTOR_H
