@@ -43,6 +43,14 @@ public:
 
 	void setGravity(float g) {gravity = g;}
 
+
+	/**
+	 * Translate, then rotate a point around the specified parameters,
+	 * all translation is in mm and all rotation is in degrees.
+	 *
+	 */
+	cv::Point3f transformCoord(cv::Point3f coord, float translation[], float rotationAngles[]);
+
 	/**
 	 * Get angle from when the motor is parallel to front axis to where the
 	 * end effector is aligned with the point on the pan axis. Offset is the

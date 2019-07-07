@@ -93,7 +93,8 @@ public:
 			// Do not do this more than once as will keep appending same data to file
 			//saveStereoParameters(R1, R2, P1, P2, Q);
 
-			stereoParameters = new StereoParameters(R1, R2, P1, P2, Q);
+			// TODO: Figure out why stereoParameters cannot be found by compiler
+			//stereoParameters = new StereoParameters(R1, R2, P1, P2, Q);
 
 			std::vector<cv::Vec2f> coords1, coords2;
 			for (auto it = kp1.begin(); it!=kp1.end(); it++) {
@@ -123,16 +124,22 @@ public:
 				std::cout << (col2[i] / col2[3]) << std::endl;
 			}
 
+
 			AngleCalculator ac;
-			float panAngle = ac.getPanAngle(homogeneousCoord, 0);
-			float tiltAngle = ac.getTiltAngle(homogeneousCoord, 0, 0);
+			float translationDist[] = {0.0f, 0.0f, 0.0f};
+			float rotationAngles[] = {0.0f, 0.0f, 0.0f};
+			cv::Point3f transformedCoord = 
+				ac.transformCoord(homogeneousCoord, translationDist, rotationAngles);
+
+			float panAngle = ac.getPanAngle(transformedCoord, 0);
+			float tiltAngle = ac.getTiltAngle(transformedCoord, 0, 0);
+
+			// Set static until fix angle calibration issue
+			panAngle = 45;
+			tiltAngle = 135;
 
 			motor = new ServoMotor();
-			motor->moveMotorToPosition(115.0f, 115.0f);
-			motor->moveMotorToPosition(135.0f, 135.0f);
-			motor->moveMotorToPosition(120.0f, 120.0f);
-			motor->moveMotorToPosition(105.0f, 105.0f);
-			motor->moveMotorToPosition(90.0f, 90.0f);
+			motor->moveMotorToPosition(panAngle, tiltAngle);
 		}
 	}
 

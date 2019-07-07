@@ -196,6 +196,36 @@ src/actionEndEffector/ArduinoFire.cpp.s:
 	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/actionEndEffector/ArduinoFire.cpp.s
 .PHONY : src/actionEndEffector/ArduinoFire.cpp.s
 
+src/calibration/calibration.o: src/calibration/calibration.cpp.o
+
+.PHONY : src/calibration/calibration.o
+
+# target to build an object file
+src/calibration/calibration.cpp.o:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/calibration/calibration.cpp.o
+	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/calibration/calibration.cpp.o
+.PHONY : src/calibration/calibration.cpp.o
+
+src/calibration/calibration.i: src/calibration/calibration.cpp.i
+
+.PHONY : src/calibration/calibration.i
+
+# target to preprocess a source file
+src/calibration/calibration.cpp.i:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/calibration/calibration.cpp.i
+	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/calibration/calibration.cpp.i
+.PHONY : src/calibration/calibration.cpp.i
+
+src/calibration/calibration.s: src/calibration/calibration.cpp.s
+
+.PHONY : src/calibration/calibration.s
+
+# target to generate assembly for a file
+src/calibration/calibration.cpp.s:
+	$(MAKE) -f CMakeFiles/detectionTest.dir/build.make CMakeFiles/detectionTest.dir/src/calibration/calibration.cpp.s
+	$(MAKE) -f CMakeFiles/objectTracker.dir/build.make CMakeFiles/objectTracker.dir/src/calibration/calibration.cpp.s
+.PHONY : src/calibration/calibration.cpp.s
+
 src/camera/Camera.o: src/camera/Camera.cpp.o
 
 .PHONY : src/camera/Camera.o
@@ -686,6 +716,9 @@ help:
 	@echo "... src/actionEndEffector/ArduinoFire.o"
 	@echo "... src/actionEndEffector/ArduinoFire.i"
 	@echo "... src/actionEndEffector/ArduinoFire.s"
+	@echo "... src/calibration/calibration.o"
+	@echo "... src/calibration/calibration.i"
+	@echo "... src/calibration/calibration.s"
 	@echo "... src/camera/Camera.o"
 	@echo "... src/camera/Camera.i"
 	@echo "... src/camera/Camera.s"
