@@ -81,7 +81,7 @@ int main(int argc, char * argv[]) {
         //imagePairs = getImageFromCamera(5, CAM1_IPADDR, CAM2_IPADDR);
     }
     else {
-        imagePairs = getImagesFromFile(40, STEREO1_FILE_PATH, STEREO2_FILE_PATH, REPLACE_STR);
+        imagePairs = getImagesFromFile(100, STEREO1_FILE_PATH, STEREO2_FILE_PATH, REPLACE_STR);
     }
 
     // Retrieve existing intrinsic camera properties from file using arguments

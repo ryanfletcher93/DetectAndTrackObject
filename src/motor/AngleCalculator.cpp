@@ -44,8 +44,8 @@ cv::Point3f AngleCalculator::transformCoord(cv::Point3f coord, float translation
 
 
 float AngleCalculator::getPanAngle(cv::Point3f point, int offset) {
-	float noOffsetAngle = atan(point.x / point.y);
-	float extraAngleFromOffset = asin(offset / hypot((float) point.x, (float) point.y));
+	float noOffsetAngle = atan(point.y / point.z);
+	float extraAngleFromOffset = asin(offset / hypot((float) point.y, (float) point.z));
 
 	float totalAngle = noOffsetAngle + extraAngleFromOffset;
 	return totalAngle;
@@ -53,10 +53,10 @@ float AngleCalculator::getPanAngle(cv::Point3f point, int offset) {
 
 
 float AngleCalculator::getTiltAngle(cv::Point3f point, int armOffset, int zCoordOffset) {
-	float adjustedZCoord = point.z - zCoordOffset;
+	float adjustedZCoord = point.z;//point.z - zCoordOffset;
 
-	float noArmOffsetAngle = atan(adjustedZCoord / (float)point.x);
-	float extraAngleFromOffset = asin((float)armOffset / hypot((float)adjustedZCoord, (float)point.x));
+	float noArmOffsetAngle = atan(((float)point.x * -1) / adjustedZCoord) * 180/3.1415;
+	float extraAngleFromOffset = asin((float)armOffset / hypot((float)adjustedZCoord, (float)point.x)) * 180/3.1415;
 
 	float totalAngle = noArmOffsetAngle + extraAngleFromOffset;
 	return totalAngle;

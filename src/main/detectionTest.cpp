@@ -69,8 +69,8 @@ public:
 			cv::Scalar minRedThreshold = cv::Scalar(150, 110, 90);
 			cv::Scalar maxRedThreshold = cv::Scalar(180, 255, 255);
 
-			cv::Scalar minYellowThresh = cv::Scalar(25, 112, 44);
-			cv::Scalar maxYellowThresh = cv::Scalar(50, 230, 225);
+			cv::Scalar minYellowThresh = cv::Scalar(25, 90, 44);
+			cv::Scalar maxYellowThresh = cv::Scalar(50, 255, 225);
 
 			std::vector<cv::KeyPoint> kp1, kp2;
 			ColourDetector colourDetector;
@@ -120,19 +120,24 @@ public:
 			homogeneousCoord.y = triangCoords[1] / triangCoords[3];
 			homogeneousCoord.z = triangCoords[2] / triangCoords[3];
 
+			homogeneousCoord.z *= -1;
+
 			for (int i=0; i<3; i++) {
-				std::cout << (col2[i] / col2[3]) << std::endl;
+				std::cout << (triangCoords[i] / triangCoords[3]) << std::endl;
 			}
 
 
 			AngleCalculator ac;
-			float translationDist[] = {0.0f, 0.0f, 0.0f};
+			float translationDist[] = {-700.0f, 0.0f, 0.0f};
 			float rotationAngles[] = {0.0f, 0.0f, 0.0f};
 			cv::Point3f transformedCoord = 
 				ac.transformCoord(homogeneousCoord, translationDist, rotationAngles);
 
 			float panAngle = ac.getPanAngle(transformedCoord, 0);
 			float tiltAngle = ac.getTiltAngle(transformedCoord, 0, 0);
+
+			std::cout << "Pan: " <<  panAngle << std::endl;
+			std::cout << "Tilt: " << tiltAngle << std::endl;
 
 			// Set static until fix angle calibration issue
 			panAngle = 45;
