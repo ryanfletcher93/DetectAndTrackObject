@@ -10,19 +10,19 @@
 #define CAM1_IPADDR "192.168.1.7"
 #define CAM2_IPADDR "192.168.1.9"
 
-#define CAM1_INTRINSICS_PATH "../src/calibration/cameraSetup1/cam1/calibResults"
-#define CAM2_INTRINSICS_PATH "../src/calibration/cameraSetup1/cam2/calibResults"
+#define CAM1_INTRINSICS_PATH "../calibration/cameraSetup2/cam1/calibResults"
+#define CAM2_INTRINSICS_PATH "../calibration/cameraSetup2/cam2/calibResults"
 
-#define CAM1_VIDEO_PATH "../src/calibration/cameraSetup1/cam1/video0.avi"
-#define CAM2_VIDEO_PATH "../src/calibration/cameraSetup1/cam2/video0.avi"
+#define CAM1_VIDEO_PATH "../calibration/cameraSetup2/cam1/video0.avi"
+#define CAM2_VIDEO_PATH "../calibration/cameraSetup2/cam2/video0.avi"
 
-#define IMAGE1_PATH "../src/calibration/cameraSetup1/cam1/background1WithObjects.png"
-#define IMAGE2_PATH "../src/calibration/cameraSetup1/cam2/background1WithObjects.png"
+#define IMAGE1_PATH "../calibration/cameraSetup2/cam1/backgroundImageWithObjects1.png"
+#define IMAGE2_PATH "../calibration/cameraSetup2/cam2/backgroundImageWithObjects1.png"
 
-#define STEREO_INTRINSICS_PATH "../src/calibration/cameraSetup1/stereo/StereoCameraProperties"
+#define STEREO_INTRINSICS_PATH "../calibration/cameraSetup2/stereo/StereoCameraProperties"
 
-#define BACKGROUND_IMG_1 "../src/calibration/cameraSetup1/cam1/background1.png"
-#define BACKGROUND_IMG_2 "../src/calibration/cameraSetup1/cam2/background1.png"
+#define BACKGROUND_IMG_1 "../src/calibration/cameraSetup2/cam1/background1.png"
+#define BACKGROUND_IMG_2 "../src/calibration/cameraSetup2/cam2/background1.png"
 
 using cv::Mat;
 
@@ -145,7 +145,7 @@ public:
 
 
 	void getCameraIntrinsics(cv::Mat& K1, cv::Mat& D1, cv::Mat& K2, cv::Mat& D2) {
-		std::string calibPath = "/home/ryan/Documents/Prog Projects/ImageProcessing/src/calibration/cameraSetup1/";
+		std::string calibPath = "/home/ryan/Documents/Prog Projects/ImageProcessing/calibration/cameraSetup2/";
 		std::string fileCam1 = calibPath + "cam1/calibResults";
 		cv::FileStorage fs1(fileCam1, cv::FileStorage::READ);
 
@@ -160,7 +160,7 @@ public:
 	}
 
 	void getStereoCameraIntrinsics(cv::Mat& R, cv::Vec3d& T) {
-		std::string calibPath = "/home/ryan/Documents/Prog Projects/ImageProcessing/src/calibration/cameraSetup1/stereo/StereoCameraProperties";
+		std::string calibPath = "/home/ryan/Documents/Prog Projects/ImageProcessing/calibration/cameraSetup2/stereo/StereoCameraProperties";
 		cv::FileStorage fs(calibPath, cv::FileStorage::READ);
 
 		fs["R"] >> R;
@@ -168,7 +168,7 @@ public:
 	}
 
 	void saveStereoParameters(cv::Mat R1, cv::Mat R2, cv::Mat P1, cv::Mat P2, cv::Mat Q) {
-		std::string calibPath = "/home/ryan/Documents/Prog Projects/ImageProcessing/src/calibration/cameraSetup1/stereo/StereoCameraProperties";
+		std::string calibPath = "/home/ryan/Documents/Prog Projects/ImageProcessing/calibration/cameraSetup2/stereo/StereoCameraProperties";
 		cv::FileStorage fs(calibPath, cv::FileStorage::APPEND);
 
 		fs << "R1" << R1;
